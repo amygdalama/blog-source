@@ -157,6 +157,13 @@ In the terminal, move to the `output` directory, and initialize a git repo. Add 
 	$ git commit -m "commit message"
 	$ git push origin master
 
+If you use this method, you'll want to change the following setting to `False` in your `publishconf.py` file:
+
+	:::python
+	DELETE_OUTPUT_DIRECTORY = False
+
+Otherwise if you use the `publishconf.py` file as your settings file when running the `pelican` command, you'll delete your git repo!
+
 You'll also need to set up another repository for your source content, configuration files, and theme. I added a .gitignore to this repo to ignore the files in the output folder.
 
 Within about 10 minutes of pushing your changes, your site should be up and running! (Later changes should be reflected on your site almost instantaneously.)
