@@ -6,7 +6,7 @@ AUTHOR = u'Amy Hanlon'
 SITENAME = u'Amy Hanlon'
 SITEURL = 'http://amygdalama.github.io'
 
-TIMEZONE = 'New_York'
+TIMEZONE = 'America/New_York'
 
 DEFAULT_LANG = u'en'
 
