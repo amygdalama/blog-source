@@ -9,7 +9,7 @@ Over the past week I've been dog-paddling through the ocean of misery that is mi
 
 The great part about this whole process is that with Pelican, I can write my blog posts and pages in [Markdown](http://daringfireball.net/projects/markdown/) (about which I also knew little until last week, but it's *wonderfully easy to learn*.) I am so tired of wrangling with WordPress's built-in editor trying to get my code blocks and in-line code to format correctly. Markdown is a blissful alternative.
 
-There's a plethora of material online on Pelican and GitHub pages, but it is fairly disconnected and presumes a certain level of front-end development experience, of which I have none. Hopefully this post can help others, particularly those without a convenient 2-bottles-for-$10-special, make this transition with less misery.
+There's a plethora of material online on Pelican and GitHub pages, but it is fairly disconnected and presumes a certain level of front-end development experience, of which I have none. Hopefully this post can help others make this transition with less misery.
 
 ##GitHub Pages Setup
 
@@ -83,13 +83,13 @@ There's a plethora of material online on Pelican and GitHub pages, but it is fai
 		 	$ mkdir content/pages
 		 	$ mkdir content/images
 
-		Pelican by default is configured to know that your pages (i.e. non-temporal pages like About Me, Contact, etc) are found within this `pages` directory and that images are found within the `images` directory.  
+		Pelican by default is configured to know that your pages (i.e. static pages like About Me, Contact, etc) are found within this `pages` directory and that images are found within the `images` directory.  
 
-	* `develop_server.sh` is a bash script that I believe handles serving your site locally during development (i.e. it serves your site to http://localhost:8000).
+	* `develop_server.sh` is a bash script that I believe handles serving your site locally during development (i.e. it serves your site to [http://localhost:8000](http://localhost:8000)).
 
 	* `fabfile.py` is a configuration file for [Fabric](http://docs.fabfile.org/en/1.8/) which allows you to generate your site using the `fab` command. You'll need to `pip install fabric` if you want to use it. Alternatively you can just use `make`.
 
-	* `output` is, by default, where Pelican will store your HTML files when you run `pelican content`. This can cause issues which I describe in the section **Integrating with GitHub**.
+	* `output` is, by default, where Pelican will store your HTML files when you run `pelican content`. This can cause issues which I describe in the section **Posting to GitHub**.
 
 	* `pelicanconf.py` houses your Pelican configuration [settings](http://docs.getpelican.com/en/3.3.0/settings.html).
 
@@ -103,7 +103,7 @@ This section assumes you have existing content on a WordPress blog. Pelican also
 2. [Imperfectly convert the XML to Markdown using Pelican](http://docs.getpelican.com/en/3.1.1/importer.html)
 3. Manually export your images from your WordPress Media Library (I know. This sucks.) Move these images to `content/images`.
 4. Manually edit the Markdown output (your code blocks, links, embedded images will likely need editing).
-5. Move your Markdown files to the `content` directory within your website's main directory. Content intended to be non-temporal pages (i.e. About Me, Contact, etc) should go in the `content/pages` directory. Articles/blog posts should go in the `content` directory.
+5. Move your Markdown files to the `content` directory within your website's main directory. Content intended to be static pages (i.e. About Me, Contact, etc) should go in the `content/pages` directory. Articles/blog posts should go in the `content` directory.
 
 ##Pelican Themes
 1. Clone the available [Pelican Themes](https://github.com/getpelican/pelican-themes) into your blog's main directory.
@@ -118,19 +118,25 @@ This section assumes you have existing content on a WordPress blog. Pelican also
 		:::python
 		THEME = "pelican-themes/subtle"
 
-	I recommend using an absolute or relative path to the theme, rather than using `pelican-themes --install subtle`. This ensures that Pelican HTML output will reflect any changes you make to the theme.
+	This method is better than using `pelican-themes` as described [here](http://docs.getpelican.com/en/3.3.0/pelican-themes.html), because it ensures that the Pelican HTML output will reflect any changes you make to the theme (without having to re-install the theme by running the `pelican-themes` command).
 
 ##Customization
 All elements of your theme are customizable! You can change attributes of text like font, size, color, and more in the `main.css` file found in your theme's directory. For example, I've made many edits to the file `pelican-themes/subtle/static/css/main.css`.
 
 Similarly, you can change layouts of your pages (like what shows up in your site nav menu) by exploring the HTML files in the `templates` folder within your theme. There will usually be a `base.html` file (or something similar) that provides the foundation for things like your header and site nav menu that will apply to every page. 
 
-There should also be HTML files that serve as templates for specific types of pages. For example, `article.html` defines the basic structure for your articles/blog posts. If you want to change whether the author, date, tags, etc, display above article content, you should look there.
+There should also be HTML files that serve as templates for specific types of pages. For example, `article.html` defines the basic structure for your articles/blog posts. If you want to change the metadata that displays above article content, you should look there.
 
-If you see something on your website that you want to change, and you're not sure where to look in your theme's CSS/HTML files, right click on the element in the browser and go to "Inspect Element". This will show you where in the HTML the element is (on the left) and what parts of the CSS file define its style (on the right). You can adjust things here in the browser to test out different fonts, colors, etc, but note that changes you make to the code in your browser will not be reflected in your source files.
+If you see something on your website that you want to change, and you're not sure where to look in your theme's CSS/HTML files, right click on the element in the browser and go to "Inspect Element". This will show you where in the HTML the element is (on the left) and what parts of the CSS file define its style (on the right). You can adjust things here in the browser to test out different fonts, colors, etc, but changes you make to the code in your browser will not be reflected in your source files.
 
 ##Generating Your Site
-Once you have markdown files in your `content` folder, you can run `make devserver`, which does a number of things: it runs the `pelican` command on your `content` folder to generate HTML for your site using the theme you specify in your `pelicanconf.py` file, and serves your site locally at [http://localhost:8000](http://localhost:8000). `make devserver` will also automatically regenerate your site every time you save a change to a content, configuration, or theme file! Just refresh the page in your browser, and you should immediately see the changes.
+Once you have markdown files in your `content` folder, navigate to your blog's main directory and run:
+
+	:::bash
+	$ cd blog
+	$ make devserver
+
+`make devserver` does a number of things: first it runs the `pelican` command on your `content` folder to generate HTML for your site using the theme you specify in your `pelicanconf.py` file, and serves your site locally at [http://localhost:8000](http://localhost:8000). `make devserver` will also automatically regenerate your site (i.e. run `pelican` on `content` every time you save a change to a content, configuration, or theme file! Just refresh the page in your browser, and you should immediately see the changes. If this doesn't work, it's probably due to the settings you have in your configuration files (`pelicanconf.py`, `Makefile`, and/or `develop_server.sh`).
 
 ##Posting to GitHub
 Recall that you need a repository on GitHub named *username.github.io* (this will be the remote repository for your blog), and that your HTML files need to be in this repository's main directory (not within a subdirectory).
@@ -151,7 +157,7 @@ In the terminal, move to the `output` directory, and initialize a git repo. Add 
 	$ git commit -m "commit message"
 	$ git push origin master
 
-You'll also need to set up another repository for your content, configuration files, and theme. I added a .gitignore to this repo to ignore the files in the output folder.
+You'll also need to set up another repository for your source content, configuration files, and theme. I added a .gitignore to this repo to ignore the files in the output folder.
 
 Within about 10 minutes of pushing your changes, your site should be up and running! (Later changes should be reflected on your site almost instantaneously.)
 
@@ -160,6 +166,6 @@ If you have your own domain name that you'd like to use instead of *username.git
 
 ##Fin
 
-Feel free to poke around my blog's [GitHub repo](https://github.com/amygdalama/amygdalama.github.io) (beware: there are unpublished draft posts in there). My configuration files in particular might be useful to you.
+Feel free to poke around my blog's [GitHub](https://github.com/amygdalama/blog-source) [repos](https://github.com/amygdalama/amygdalama.github.io) (beware: there are unpublished draft posts in there). My configuration files in particular might be useful to you.
 
 If any of you Hacker Schoolers have trouble migrating your blog, I'd be happy to help!

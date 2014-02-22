@@ -7,7 +7,7 @@ Slug: bio
 
 Hi, I'm Amy.
 ===============
-After much internal struggle, I've finally convinced myself I can
+I've finally convinced myself I can
 identify as A Programmer. My current focus is becoming an expert in
 Python, Machine Learning, and Data Analysis. I have quite a ways to go.
 
