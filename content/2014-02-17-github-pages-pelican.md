@@ -139,46 +139,19 @@ It's intuitive to initialize a local repository for your blog within your blog's
 
 However, if you do this, GitHub won't generate your site! It isn't smart enough to know that the HTML files it needs to serve are actually contained within the `output` folder (recall that Pelican by default saves the HTML it generates in this folder).
 
-There seem to be two solutions for this problem:
+The best solution I've come up with so far (and please email me if you know of a better solution!) is to create two separate repositories - one inside the `output` directory where Pelican generates your HTML (this repo should have *username.github.io* on GitHub as a remote), and another in your blog's main directory with your source Markdown files (in `content`), theme, and configuration files (this repo should have a different remote on GitHub).
 
-1. Create two separate repositories - one inside the `output` directory where Pelican generates your HTML (this repo should have *username.github.io* on GitHub as a remote), and another in your blog's main directory with your source Markdown files (in `content`), theme, and configuration files (this repo should have a different remote on GitHub).
-2. Create a single repository in your blog's main directory that houses everything (this repo should have *username.github.io* on GitHub as a remote), and edit Pelican's settings to create output in your blog's main directory rather than within the `output` subdirectory.
-
-	To change Pelican's output settings, you'll need to edit these files:  
-	
-	* `pelicanconf.py` - change your `OUTPUT` settings variable
-
-			:::python
-			OUTPUT_PATH = '.'
-	
-	* `publishconf.py` - change your `DELETE_OUTPUT_DIRECTORY` variable
-
-			:::python
-			DELETE_OUTPUT_DIRECTORY = False
-
-	* `Makefile` and `develop_server.sh`- change your `OUTPUTDIR`
-
-			:::bash
-			OUTPUTDIR=$(BASEDIR)
-
-	I decided to go with this option, but **DANGER!** If you go with #2, ***do not use the command `make clean`***! It will delete everything in your blog's main directory! To make super sure this command never gets executed, you can comment out its definition in your `Makefile`:
-
-		:::bash
-		# clean:
-		# 	[ ! -d $(OUTPUTDIR) ] || rm -rf $(OUTPUTDIR)
-
-If you know of a more elegant solution to this problem, please email me!
-
-In the terminal, move to the directory you're choosing to house your git repo (either the `output` directory or your blog's main directory), and initialize a git repo. Add a remote pointing to the repo you created on GitHub (called *username.github.io*), add all the files you want to commit, commit, and push changes to the remote repository.
+In the terminal, move to the `output` directory, and initialize a git repo. Add a remote pointing to the repo you created on GitHub (called *username.github.io*), add all the files you want to commit, commit, and push changes to the remote repository.
 	
 	:::bash
+	$ cd output
 	$ git init
 	$ git remote add origin https://github.com/username/username.github.io.git
 	$ git add --all
 	$ git commit -m "commit message"
 	$ git push origin master
 
-If you're going with option #1, you'll also need to set up another repository for your content, configuration files, and theme.
+You'll also need to set up another repository for your content, configuration files, and theme. I added a .gitignore to this repo to ignore the files in the output folder.
 
 Within about 10 minutes of pushing your changes, your site should be up and running! (Later changes should be reflected on your site almost instantaneously.)
 
