@@ -4,7 +4,6 @@ Category: Meta
 Tags: learning, hacker school
 Slug: how-should-i-learn-programming
 Author: Amy Hanlon
-Status: draft
 
 I rarely hear the question *"How should I learn programming?"* from individuals who are just beginning to write code. Instead I hear way more specific variants like:
 
