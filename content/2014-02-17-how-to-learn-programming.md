@@ -37,7 +37,7 @@ See! Other people are afraid! Fear is normal!
 
 It is essential to become aware of your fears. List them. Have someone read the list. You will probably giggle together. They are probably afraid, too.
 
-##Fuck tutorials. Go write a program. Send it to another human being. 
+##Fuck tutorials. Write a program. Send it to another human. 
 You can send it to me! Here's my email: amyehanlon@gmail.com <3
 
 A huge shoutout to the fabulous [Mel Chua](http://melchua.com/) for talking through this post with me and giving me a better vocabulary and framework for understanding learning.
