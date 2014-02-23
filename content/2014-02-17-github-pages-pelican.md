@@ -5,7 +5,7 @@ Tags: pelican, blogging, wordpress, github-pages, markdown
 Slug: migrating-to-github-pages-using-pelican
 Author: Amy Hanlon
 
-Over the past week I've been dog-paddling through the ocean of misery that is migrating a blog from one host (WordPress) to another ([GitHub Pages](http://pages.github.com/)) and attempting to learn enough CSS and [Jinja](http://jinja.pocoo.org/) to handle setting up my site using [Pelican](http://docs.getpelican.com/en/3.3.0/). I have no experience with CSS! And my HTML experience is limited to inserting angst into my MySpace profile! And I became aware of Jinja and Pelican's existence about a week ago! So obviously I've drowned myself in 1.5 bottles of my neighborhood liquor store's 2-bottles-of-wine-for-$10 special.
+Over the past week I've been dog-paddling through the ocean of misery that is migrating a blog from one host (WordPress) to another ([GitHub Pages](http://pages.github.com/)) and attempting to learn enough CSS and [Jinja](http://jinja.pocoo.org/) to handle setting up my site using [Pelican](http://docs.getpelican.com/en/3.3.0/). I have no experience with CSS! And my HTML experience is limited to injecting angst into my MySpace profile! And I became aware of Jinja and Pelican's existence about a week ago! So obviously I've drowned myself in 1.5 bottles of my neighborhood liquor store's 2-bottles-of-wine-for-$10 special.
 
 The great part about this whole process is that with Pelican, I can write my blog posts and pages in [Markdown](http://daringfireball.net/projects/markdown/) (about which I also knew little until last week, but it's *wonderfully easy to learn*.) I am so tired of wrangling with WordPress's built-in editor trying to get my code blocks and in-line code to format correctly. Markdown is a blissful alternative.
 
@@ -13,7 +13,7 @@ There's a plethora of material online on Pelican and GitHub pages, but it is fai
 
 ##GitHub Pages Setup
 
-1. Create GitHub repo following the [GitHub Pages instructions](http://pages.github.com/) (the first step only!)
+1. Create a GitHub repo following the [GitHub Pages instructions](http://pages.github.com/) (the first step only!)
 
 *A note on GitHub Pages:* I believe your HTML files (particularly your index.html file) must be in the *main directory* of your git repo for this to work. This will be important later. More detail is given in the **Posting to GitHub** section.
 
@@ -164,7 +164,20 @@ If you use this method, you'll want to change the following setting to `False` i
 
 Otherwise if you use the `publishconf.py` file as your settings file when running the `pelican` command, you'll delete your git repo!
 
-You'll also need to set up another repository for your source content, configuration files, and theme. I added a .gitignore to this repo to ignore the files in the output folder.
+Similarly, don't use the `make clean` command! If you poke around the `Makefile`, you'll see that `make clean` runs `rm -rf output` which will delete all files (including your git repo) in your output folder. 
+
+If you accidentally delete the repo in your output folder, it's not a *huge* deal (I've done it like 5 times playing with different commands and settings). Just clone your remote *username.github.io* repo into a new, empty `output` folder, re-generate your site with any changes you've made since your last push to the remote, and then commit and push the changes to the remote:
+
+	:::bash
+	$ cd blog
+	$ git clone https://github.com/username/username.github.io.git output
+	$ pelican content
+	$ cd output
+	$ git add --all
+	$ git commit -m "commit message"
+	$ git push origin master
+
+You'll also need to set up another repository for your source content, configuration files, and theme, which is annoying. I added a .gitignore to this repo to ignore the files in the output folder, but that isn't necessary.
 
 Within about 10 minutes of pushing your changes, your site should be up and running! (Later changes should be reflected on your site almost instantaneously.)
 
