@@ -11,8 +11,8 @@ TIMEZONE = 'America/New_York'
 DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
-FEED_ALL_ATOM = None
-CATEGORY_FEED_ATOM = None
+FEED_ALL_ATOM = 'feeds/all.atom.xml'
+CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 TRANSLATION_FEED_ATOM = None
 
 # Blogroll
@@ -31,3 +31,5 @@ THEME = "pelican-themes/subtle"
 DISPLAY_CATEGORIES_ON_MENU = False
 
 OUTPUT_PATH = 'output/'
+
+GOOGLE_ANALYTICS = "UA-48330831-1"
