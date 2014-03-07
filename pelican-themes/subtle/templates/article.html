@@ -17,9 +17,10 @@
         {% include 'taglist.html' %}
       </p>
     </div><!-- /.entry-content -->
+    <br>
     {% if DISQUS_SITENAME %}
     <div class="comments">
-      <h2>Comments !</h2>
+      <h2 class = "other-articles">Comments</h2>
       <div id="disqus_thread"></div>
       <script type="text/javascript">
         var disqus_identifier = "{{ article.url }}";

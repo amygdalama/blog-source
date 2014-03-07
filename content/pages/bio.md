@@ -22,8 +22,6 @@ School][] this February.
 I nerd out about sex toys, science fiction, feminism, comics, Dune (I
 <3 Dune. Dune, Dune, Dune.), math, board games, etc. I think it's fabulous to drink champagne in bed.
 
-*(Photo by Julie Lavoie)*
-
 [white_bg]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg
 [Adlucent]: http://www.adlucent.com/
 [Hacker School]: https://www.hackerschool.com/

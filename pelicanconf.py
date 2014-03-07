@@ -14,6 +14,7 @@ DEFAULT_LANG = u'en'
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 TRANSLATION_FEED_ATOM = None
+TAG_FEED = 'feeds/tags/%s.atom.xml'
 
 # Blogroll
 LINKS = False
@@ -33,3 +34,6 @@ DISPLAY_CATEGORIES_ON_MENU = False
 OUTPUT_PATH = 'output/'
 
 GOOGLE_ANALYTICS = "UA-48330831-1"
+
+DISQUS_SITENAME = "mathamy"
+
