@@ -11,10 +11,11 @@ TIMEZONE = 'America/New_York'
 DEFAULT_LANG = u'en'
 
 # Feed generation is usually not desired when developing
+FEED_DOMAIN = SITEURL
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
 TRANSLATION_FEED_ATOM = None
-TAG_FEED = 'feeds/tags/%s.atom.xml'
+TAG_FEED_ATOM = 'feeds/%s.atom.xml'
 
 # Blogroll
 LINKS = False
