@@ -54,3 +54,7 @@ Then, to make the file executable, type:
     $ chmod a=r+w+x .git/hooks/post-commit
 
 And that's it! Joyful automation!
+
+##Edit
+
+*2014-03-14*: Hacker Schooler Matthew Avant has a [superior](http://www.mavant.com/4.html) method using a pre-push hook (rather than a post-commit hook). I'm using his method now :)
