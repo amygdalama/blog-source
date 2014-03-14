@@ -4,7 +4,6 @@ Category: Projects
 Tags: python, harry potter, bootstrapping, cpython, compilers, grammar, hacker school
 Slug: import-accio-bootstrapping-python-grammar
 Author: Amy Hanlon
-Status: draft
 
 At [Hacker School](https://www.hackerschool.com/), I've been building an alternate universe Python by overwriting builtin functions and statements with Harry Potter spells. This is a thing you can do at Hacker School!
 
@@ -263,3 +262,5 @@ HOLY SHIT IT WORKS!
 #Fin
 
 That's it. We just compiled two Pythons and fooled around with source code for the sake of a joke. Grab yourselves a beer, friends. Victory.
+
+My super messy and not-really-prepared-for-the-general-public GitHub [repo](https://github.com/amygdalama/nagini) contains both versions of Pythons, for reference. 
