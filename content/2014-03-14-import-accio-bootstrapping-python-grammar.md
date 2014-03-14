@@ -263,4 +263,4 @@ HOLY SHIT IT WORKS!
 
 That's it. We just compiled two Pythons and fooled around with source code for the sake of a joke. Grab yourselves a beer, friends. Victory.
 
-My super messy and not-really-prepared-for-the-general-public GitHub [repo](https://github.com/amygdalama/nagini) contains both versions of Pythons, for reference. 
+My super messy and not-really-prepared-for-the-general-public GitHub [repo](https://github.com/amygdalama/nagini) contains both versions of Python, for reference. 
