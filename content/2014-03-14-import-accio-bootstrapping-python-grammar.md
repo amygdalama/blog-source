@@ -84,7 +84,7 @@ Aha. So the statement `import x` probably does something like:
 And `import sys` is like shorthand for the command:
 
     :::text
-    >>> sys = __builtins__.__import('sys')
+    >>> sys = __builtins__.__import__('sys')
 
 (Here I'm only describing simple `import` statements, but more complex statements like `from x import y.w, y.z` work similarly.)
 
