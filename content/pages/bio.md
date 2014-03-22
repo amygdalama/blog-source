@@ -7,20 +7,11 @@ Slug: bio
 
 Hi, I'm Amy.
 ===============
-I've finally convinced myself I can
-identify as A Programmer. My current focus is becoming an expert in
-Python, Machine Learning, and Data Analysis. I have quite a ways to go.
+I'm in the W'14 batch at [Hacker School], where I've worked on projects like [creating sounds from spectrograms](https://github.com/amygdalama/furrier-transform) (huge failure) and [replacing Python builtins and keywords with Harry Potter spells](https://github.com/amygdalama/nagini) (huge success).
 
-My background is in Theoretical Math. After college I spent a year
-optimizing paid search ads for Adam & Eve, so I basically used to sell
-dildos on the internet (though my employer was [Adlucent][], an agency).
-I then used scikit-learn to automate tasks like
-classification of search queries into product categories. Somehow I
-wound up quitting my job in Austin and moving to New York for [Hacker
-School][] this February.
+My background is in Theoretical Math. After college I optimized paid search ads for Adam & Eve, so I basically used to sell dildos on the internet (though my employer was [Adlucent], an agency in Austin, TX). I then used machine learning via [scikit-learn](http://scikit-learn.org/stable/) to automate tasks like classification of search queries into product categories.
 
-I nerd out about sex toys, science fiction, feminism, comics, Dune (I
-<3 Dune. Dune, Dune, Dune.), math, board games, etc. I think it's fabulous to drink champagne in bed.
+I will nerd out with you about sex toys, programming, science fiction, feminism, comics, Dune (I <3 Dune. Dune, Dune, Dune.), math, board games, etc. I also think it's fabulous to drink champagne in bed.
 
 [white_bg]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg
 [Adlucent]: http://www.adlucent.com/
