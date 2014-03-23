@@ -4,7 +4,6 @@ Category: Projects
 Tags: python, builtins
 Slug: whats-the-deal-with-builtins-vs-builtin
 Author: Amy Hanlon
-Status: draft
 
 Seriously, what's the difference? When you first fire up the Python interpreter, `__builtins__` is in your namespace for free:
 
