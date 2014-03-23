@@ -133,6 +133,6 @@ Yes! My hypothesis was correct. Okay. So now I get why using `__builtin__` is be
 
 **The type, and thus behavior, of `__builtins__` changes based on the context of where it's being executed, while the type and behavior of `__builtin__` is constant. Rad.**
 
-Thanks, stranger, for the learning opportunity. And thanks, always, to Allison Kaptur, for exploring this topic with me.
+Thanks, stranger who [suggested](https://github.com/amygdalama/nagini/issues/1) I look into this, for the learning opportunity. And thanks, always, to Allison Kaptur, for exploring this topic with me.
 
 The code for this blog post is on [GitHub](https://github.com/amygdalama/builtins), of course.
