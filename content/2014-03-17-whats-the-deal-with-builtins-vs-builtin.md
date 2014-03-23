@@ -64,10 +64,10 @@ Let's see what happens when we execute `a.py`:
     :::console
     $ python a.py
     In a
-    __name__ is  __main__
-    __builtin__ is __builtins__ True
-    type(__builtin__) <type 'module'>
-    type(__builtins__) <type 'module'>
+    __name__ is: __main__
+    __builtin__ is __builtins__: True
+    type(__builtin__): <type 'module'>
+    type(__builtins__): <type 'module'>
 
 Okay. So we're in the `__main__` module, and in here `__builtin__` is pointing to the same module object as `__builtins__`. 
 
