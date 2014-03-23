@@ -12,10 +12,8 @@ Seriously, what's the difference? When you first fire up the Python interpreter,
     ['__builtins__', '__name__', '__doc__', '__package__']
     >>> __builtins__
     <module '__builtin__' (built-in)>
-    >>> sys.modules['__builtin__']
-    <module '__builtin__' (built-in)>
 
-But it appears to be the `__builtin__` module! If you:
+But it appears to be the `__builtin__` module (singular)! If you:
 
     :::python
     >>> import __builtin__
