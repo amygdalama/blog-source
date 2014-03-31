@@ -1,10 +1,9 @@
-Title: A Love Affair With Broken Things, Plus Some Functional Programming
+Title: A Love Affair With Broken Things
 Date: 2014-03-29
 Category: Projects
-Tags: learning, hacker school, python, functional programming
+Tags: learning, hacker school, python, functional programming, map, lambda
 Slug: a-love-affair-with-broken-things
 Author: Amy Hanlon
-Status: draft
 
 I love broken things, unfinished things, breaking things, unfinishing things. Broken and unfinished things allow you to see the process in which they were created; their most intimate secrets are exposed.
 
@@ -44,49 +43,62 @@ In the second example of `map`, we see that Mary uses a `lambda` function:
     print squares
     # => [0, 1, 4, 9, 16]
 
-Why do we need a `lambda` function here? To understand, let's try removing it:
+Why does Mary use a `lambda` function here? Let's spend some time breaking this code and reconstructing it to understand why the `lambda` function is used.
+
+First let's try removing the `lambda` and seeing what happens:
 
     >>> squares = map(x * x, [0, 1, 2, 3, 4])
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
     NameError: name 'x' is not defined  
 
-Okay. `x` is not defined. That makes sense, because `x` isn't in our `locals` or our `globals` or our `builtins`.
+Okay. `x` is not defined. That makes sense, because `x` isn't in our `locals` or our `globals` or our `builtins`. Remember that when Python sees the name of a variable, it looks in those three places for a definition of that variable. If Python doesn't find the variable in any of those places, it throws a `NameError`. `lambda` must temporarily add variables (here, `x`) to our namespace and then throw them away.
 
-What if we tried using the `**` operator? Can we pass something like `** 2` or `+ 2` as the function for `map`? Let's try:
+We removed the arm of the statue and a `NameError` was revealed. Cool. Now let's try reconstructing the statue in a different way.
 
-    >>> squares = map(** 2, [0, 1, 2, 3, 4])
+What if we tried using the `**` operator? Can we pass something like `**2` as the function for `map`? Let's try:
+
+    >>> squares = map(**2, [0, 1, 2, 3, 4])
       File "<stdin>", line 1
-        squares = map(** 2, [0, 1, 2, 3, 4])
-                          ^
+        squares = map(**2, [0, 1, 2, 3, 4])
+                        ^
     SyntaxError: invalid syntax
 
-`SyntaxError`. This makes me think that `**` is part of a statement, defined in Python's Grammar file, and the way that we've typed our code is in violation of the the definition of that statement. So, let's look in the [Grammar file](http://docs.python.org/2/reference/grammar.html). We're not afraid to look at the Grammar file.
+This `SyntaxError` makes me think that `**` is part of a statement, defined in Python's Grammar file, and the way that we typed our code is in violation of the the definition of that statement.
 
-Searching for "**" in the Grammar, we find the line:
+I am going to cheat a bit here. I am going to present something I found on the internet that helps us understand this `SyntaxError` without showing how I knew what to google to get the answer. At some point I'll write about, given a `SyntaxError`, how we can find the relevant rules defined in Python's Grammar, understand which rules we're violating, and adjust our code to obey. But not today.
 
-    power: atom trailer* ['**' factor]
+So the short story is I did some research yesterday to figure out how `**` Python operators are [defined](https://docs.python.org/2/reference/expressions.html#the-power-operator):
 
-Since we've read Allison Kaptur's [post](http://akaptur.github.io/blog/2014/03/16/reading-ebnf/) on reading EBNF, the language in which Python's Grammar file is written, we know how to read this statement. Translating to English: a `power` statement consists of an `atom`, followed by zero or more `trailer`s, optionally followed by the literal string `'**'` and a `factor`.
-
-I have no clue what an `atom`, `trailer`, or `factor` is, so let's look those up.
-
-    atom: ('(' [yield_expr|testlist_comp] ')' |
-       '[' [listmaker] ']' |
-       '{' [dictorsetmaker] '}' |
-       '`' testlist1 '`' |
-       NAME | NUMBER | STRING+)
-
-    trailer: '(' [arglist] ')' | '[' subscriptlist ']' | '.' NAME
-
-    factor: ('+'|'-'|'~') factor | power
-
-And now I feel like an ouroboros. What does this mean. 
-
-Let's try another approach. How about we [google "python grammar power operator"](https://www.google.com/search?q=python+grammar+power+statement&oq=python+grammar+power+statement&aqs=chrome..69i57.7035j1j4&sourceid=chrome&espv=210&es_sm=91&ie=UTF-8#q=python+grammar+power+operator). The first result is this nice [Python documentation on Expressions](https://docs.python.org/2/reference/expressions.html):
- 
     power ::=  primary ["**" u_expr]
 
-So `power` consists of a `primary` followed by optionally the literal string '**' and a `u_expr`. This seems 
+The important thing to note is that any time Python sees `**` in this context, it expects a thing called a [`primary`](https://docs.python.org/2/reference/expressions.html#primaries) to come before it and a thing called a [`u_expr`](https://docs.python.org/2/reference/expressions.html#unary-arithmetic-and-bitwise-operations) to come after it. We tried typing `**2`, which doesn't include anything that could be interpreted as a `primary` before the `**`. We can tell we violated this rule without even understanding what a `primary` or a `u_expr` is.
 
-But now I'm confused. What's the difference between a Python *statement* and a Python *expression*? Well, there's a [StackOverflow answer](http://stackoverflow.com/a/4728147) for that.
+Okay. So we can't reconstruct Mary's function using '**2' instead of `lambda`. 
+
+What else could we try instead of a lambda function? Is there a function already defined in Python that does the same thing as the operator `**` but in function syntax?
+
+Let's [google](https://www.google.com/search?q=python+power+operator+function&oq=python+power+operator+function&aqs=chrome..69i57.426j0j1&sourceid=chrome&espv=210&es_sm=91&ie=UTF-8) "python power operator function." We quickly discover that there's a builtin `pow` function that takes two parameters, `x` and `y` and returns `x**y`. Cool! So `pow(x,2)` should be the same thing as `x**2`.  
+
+Does the `pow` function work in our `map` function? Let's try!
+
+    >>> squares = map(pow, [0, 1, 2, 3, 4])
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    TypeError: pow expected at least 2 arguments, got 1
+
+Oh, right. Derp. We need to pass `2` to `pow`, in addition to each element in our list. In the [documentation](https://docs.python.org/2.7/library/functions.html#map) for `map`, we see that if the function takes two arguments, we need to pass it two iterables. So we could do something kind of dumb like:
+
+    >>> squares = map(pow, [0, 1, 2, 3, 4], [2, 2, 2, 2, 2])
+    >>> squares
+    [0, 1, 4, 9, 16]
+
+It works, but it's pretty ugly compared to the original:
+
+    >>> squares = map(lambda x: x * x, [0, 1, 2, 3, 4])
+
+It seems silly to use a function, `pow`, that takes two arguments, when one of the arguments we pass it is always the same. Ohhh. Maybe that's why Mary used `lambda`! To create a function that works kind of like `pow` but just takes one argument! 
+
+So we broke the statue, attempted to reconstruct it, and then wound up with something way uglier than the original. And thus, through breaking her code, her design decisions were revealed! And now we have a better understanding of why the original process was used!
+
+Breaking things is fucking rad.
