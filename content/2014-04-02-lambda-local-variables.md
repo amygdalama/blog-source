@@ -2,7 +2,7 @@ Title: Untitled
 Date: 2014-03-29
 Category: Projects
 Tags: learning, hacker school, python, functional programming
-Slug: untitled
+Slug: untitled2
 Author: Amy Hanlon
 Status: draft
 

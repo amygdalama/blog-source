@@ -108,3 +108,6 @@ Maybe that's why Mary used `lambda`! To create a function that works kind of lik
 So we broke the statue, attempted to reconstruct it, and then wound up with something way uglier than the original. And thus, through breaking Mary's code, her design decisions were revealed! And now we have a better understanding of why the original process was used!
 
 Breaking things is fucking rad.
+  
+  
+**Disclaimer:** This post is not intended to show the most pythonic way of squaring a list of integers. Instead, it is intended to show that we can discover how and why a code block works by exploring what happens when we remove chunks of it.
