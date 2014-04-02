@@ -36,7 +36,9 @@
                 
                 <div class="entry-content">
                 {% include 'article_infos.html' %}
-                {{ article.summary }}
+                <div class="entry-summary">
+                    {{ article.summary }}
+                </div>
                 <p class='summary-tags'>
                 {% include 'taglist.html' %}
                 </p>
