@@ -1,7 +1,7 @@
 Title: What's the deal with __builtins__ vs __builtin__
 Date: 2014-03-23
 Category: Projects
-Tags: python, builtins
+Tags: python, builtins, hacker school, python internals
 Slug: whats-the-deal-with-builtins-vs-builtin
 Author: Amy Hanlon
 

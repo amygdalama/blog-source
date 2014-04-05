@@ -1,7 +1,7 @@
 Title: GitHub Pages Publication with Git Hooks
 Date: 2014-03-08
 Category: Projects
-Tags: github pages, pelican, git, blogging
+Tags: github pages, pelican, git, blogging, hacker school
 Slug: github-pages-publication-git-hooks
 Author: Amy Hanlon
 

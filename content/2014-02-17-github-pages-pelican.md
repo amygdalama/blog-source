@@ -1,7 +1,7 @@
 Title: Migrating to GitHub Pages using Pelican
 Date: 2014-02-22
 Category: Projects
-Tags: pelican, blogging, wordpress, github pages, markdown
+Tags: pelican, blogging, wordpress, github pages, markdown, hacker school
 Slug: migrating-to-github-pages-using-pelican
 Author: Amy Hanlon
 

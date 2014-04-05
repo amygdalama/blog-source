@@ -1,7 +1,7 @@
 Title: Replacing `import` with `accio`: A Dive into Bootstrapping and Python's Grammar
 Date: 2014-03-14
 Category: Projects
-Tags: python, harry potter, bootstrapping, cpython, compilers, grammar, hacker school
+Tags: python, harry potter, bootstrapping, cpython, compilers, grammar, hacker school, python internals
 Slug: import-accio-bootstrapping-python-grammar
 Author: Amy Hanlon
 

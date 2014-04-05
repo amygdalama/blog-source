@@ -1,7 +1,7 @@
 Title: A Love Affair With Broken Things
 Date: 2014-03-31
 Category: Projects
-Tags: learning, hacker school, python, functional programming, map, lambda
+Tags: learning, hacker school, python, functional programming, map, lambda, python internals, grammar
 Slug: a-love-affair-with-broken-things
 Author: Amy Hanlon
 

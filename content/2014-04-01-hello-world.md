@@ -1,7 +1,7 @@
 Title: After Six Months of Learning The Python, I Can Finally Print "Hello World!"
 Date: 2014-04-01
 Category: Projects
-Tags: python, python internals, hello world
+Tags: python, python internals, hello world, hacker school
 Slug: after-six-months-of-learning-the-python-i-can-finally-print-hello-world
 Author: Amy Hanlon
 
