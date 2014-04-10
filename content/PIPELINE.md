@@ -40,3 +40,5 @@ Ideas for future posts:
         * http://stackoverflow.com/questions/4020419/closures-in-python
         * http://stackoverflow.com/questions/12919278/how-to-define-free-variable-in-python
         * https://docs.python.org/3/reference/executionmodel.html
+        * http://www.jminuscula.es/blog/2014/04/08/python-names-bindings-and-namespaces/
+        
