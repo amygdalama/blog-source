@@ -19,26 +19,4 @@ Ideas for future posts:
     * contribute to open source - it's not as hard as it sounds! look for bugs/changes that can be made that the owner of the project would consider a nice-to-have (not essential) but just doesn't have time to fix themselves
     * some really good books and resources - LPTHW, Dive into Python, but stop reading them if you get bored!
 * What is the difference between a Python Expression vs a Statement
-* Getting Closure
-    On printing locals() inside a closure function.
-    i.e. what we discovered in the Dive into Python reading group:
-
-        >>> def make_contains_function(x):
-        ...     print('locals of factory function', locals())
-        ...     def contains(s):
-        ...         print('locals of inner function', locals())
-        ...         return x in s
-        ...     return contains
-        ...
-        >>> contains_a = make_contains_function('a')
-        locals of factory function {'x': 'a'}
-        >>> contains_a('asdkfj')
-        locals of inner function {'x': 'a', 's': 'asdkfj'}
-        True
-
-    Additional resources:
-        * http://stackoverflow.com/questions/4020419/closures-in-python
-        * http://stackoverflow.com/questions/12919278/how-to-define-free-variable-in-python
-        * https://docs.python.org/3/reference/executionmodel.html
-        * http://www.jminuscula.es/blog/2014/04/08/python-names-bindings-and-namespaces/
         
