@@ -4,7 +4,6 @@ Category: Python Internals
 Tags: python, python internals, functional programming, closures
 Slug: python-closures-and-free-variables
 Author: Amy Hanlon
-Status: draft
 
 Today, friends, we will continue to dissect functional programming concepts in Python. We're going to try to figure out what the hell is going on in this chunk of code:
 
@@ -26,27 +25,12 @@ We get a function! Whoa. A function that returns a function. Cool. Let's assign 
     <function contains at 0x10a1e2c80>
     >>> contains_a('cat') 
     True
-    >>> contains_a('mouse')
+    >>> contains_a('bro')
     False
 
-Let's walk through the above code. We can create a function called `contains_a` by calling the `make_contains_function` and passing the string `'a'` as a parameter. Then, when we pass `contains_a` a string, the function returns a boolean representing whether `'a'` is in the string or not.
+We can create a function called `contains_a` by calling the `make_contains_function` and passing the string `'a'` as a parameter. Then, when we pass `contains_a` a string, the function returns a boolean representing whether `'a'` is in the string or not.
 
-We can use `make_contains_function` to create even more functions! 
-
-    >>> contains_b = make_contains_function('b')
-    >>> contains_b
-    <function contains at 0x10a1e2d70>
-    >>> contains_b('bro')
-    True
-    >>> contains_b('dragon')
-    False
-
-And our `contains_a` function still works!
-
-    >>> contains_a('dragon')
-    True
-
-Let's look at the original code again and try understand what it does and why it works:
+Let's look at the original code again and try to understand what it does and why it works:
 
     >>> def make_contains_function(x):
     ...     def contains(s):
@@ -54,7 +38,7 @@ Let's look at the original code again and try understand what it does and why it
     ...     return contains
     ... 
 
-Let's translate this to English. We're creating a function called `make_contains_function`, which takes one parameter, `x`. In the body of the `make_contains_function`, we create an inner function called `contains`, which takes one parameter, `s`. The inner function returns `x in s`, and then the outer function, `make_contains_function`, returns the inner function.
+First let's translate this to English. We're creating a function called `make_contains_function`, which takes one parameter, `x`. In the body of the `make_contains_function`, we create an inner function called `contains`, which takes one parameter, `s`. The inner function returns `x in s`, and then the outer function returns the inner function.
 
 But how does `contains` have access to `x`? Shouldn't that throw a `NameError`? Here's my mental model for how Python looks up the value associated with a name of a variable, `x`:
 
@@ -109,11 +93,11 @@ If my mental model is correct, `x` should be returned by `locals()` within the `
     locals():  {'x': 'a', 's': 'cat'}
     True
 
-Oh! So `x` is returned by `locals()` inside the `contains` function. That's why we don't get a `NameError` when we try using `x`. My mental model of how `locals()` works and what it returns must be wrong. Let's look at the [documentation]() for `locals()`: 
+Oh! So `x` is returned by `locals()` inside the `contains` function. That's why we don't get a `NameError` when we try using `x`. My mental model of how `locals()` works and what it returns must be wrong. Let's look at the [documentation](https://docs.python.org/2/library/functions.html#locals) for `locals()`: 
 
 > Update and return a dictionary representing the current local symbol table. Free variables are returned by `locals()` when it is called in function blocks but not in class blocks.
 
-Hm. What is a "free variable"? Does that apply to our situation? I suspect it does. Either that or my definition of a local variable is wrong. Googling "python free variable" brings us to the trusty Python [Execution Model]() page, which I strongly believe every Python programmer should read and re-read often.
+Hm. What is a "free variable"? Does that apply to our situation? I suspect it does. Either that or my definition of a local variable is wrong. Googling "python free variable" brings us to the trusty Python [Execution Model](https://docs.python.org/2/reference/executionmodel.html) page, which I strongly believe every Python programmer should read and re-read often.
 
 > When a name is used in a code block, it is resolved using the nearest enclosing scope. The set of all such scopes visible to a code block is called the block's *environment*.
 
@@ -132,3 +116,5 @@ Let's apply this information to our example, and list what we know:
 Okay! When Python looks up the name `x`, it finds a value for it in the `locals()` dictionary, even though `x` isn't a local variable. My mental model wasn't *too* far off. I just need to adjust how I think about how `locals()` behaves within functions.  
 
 And, so that you understand the title of this post, and so that you can sound smart around other programmers, you should know that a function that uses a *free variable* is called a *closure*. So, in our example, `x` is a *free variable* and the function `contains` is a *closure*.
+
+Credit to [Tom Ballinger](https://twitter.com/ballingt) for the example code block and for intoducing me to [Dive Into Python3](http://www.diveintopython3.net/), an excellent read and the inspiration for this post.
