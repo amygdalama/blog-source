@@ -8,11 +8,13 @@ Slug: projects
 I spent about a week at Hacker School mischievously replacing Python builtin functions and statements with Harry Potter spells. I've named this custom Harry Potter-themed Python Nagini, after Voldemort's snake.
 
 In order to replace the import statement, I needed to compile an intermediary Python that understood both "import" and "accio" as valid statements and then use that Python to compile another Python that only understood "accio" as a valid statement (rather than "import"). The main modifications to the CPython source code occured in the Grammar files. Here are the two versions of the files:  
-[Both "accio" and "import" defined as statements](https://github.com/amygdalama/nagini/blob/master/cpython/Grammar/Grammar)  
-[Only "accio" defined as a statement](https://github.com/amygdalama/nagini/blob/master/nagini-python/Grammar/Grammar)  
-(The relevant lines start at around line 53 in both of those files.)
 
-I wrote a [blog post](http://mathamy.com/import-accio-bootstrapping-python-grammar.html) about this project and the internet loved it * it was on the front page of [Hacker News](https://news.ycombinator.com/item?id=7402620) and on Reddit and a bunch of people Tweeted about it. 
+* [Both "accio" and "import" defined as statements](https://github.com/amygdalama/nagini/blob/master/cpython/Grammar/Grammar)  
+* [Only "accio" defined as a statement](https://github.com/amygdalama/nagini/blob/master/nagini-python/Grammar/Grammar)  
+
+*(The relevant lines start at around line 53 in both of those files.)*
+
+I wrote a [blog post](http://mathamy.com/import-accio-bootstrapping-python-grammar.html) about this project and the internet loved it - it was on the front page of [Hacker News](https://news.ycombinator.com/item?id=7402620) and on Reddit and a bunch of people Tweeted about it. 
 
 I also gave a [talk](http://www.slideshare.net/AmyHanlon/replacing-import-with-accio) on this project at NYC PyLadies and at Hack and Tell.  
 
@@ -37,9 +39,10 @@ Later I found that this is actually a ["longstanding problem in audio signal pro
 
 Fair warning: you do not want to listen to any audio files that this program creates. They are wildly unpleasant.
 
-Things I learned about:
+Things I learned about: 
+
 * Fourier Transforms, Additive Synthesis, signal processing, and how sound works in the analog and digital worlds. This was super interesting and fun to learn about!
-* numpy, scipy, matplotlib, and ipython notebooks.
+* numpy, scipy, matplotlib, and ipython notebooks.  
 
 The code for this project is on [GitHub](https://github.com/amygdalama/furrier-transform).
 
@@ -51,14 +54,14 @@ Things I learned about:
 
 * Sqlite3 specifically, and databases in general. I had never worked with a database before! I essentially wrote a wrapper for sqlite3 to interact with databases that store phonebook (name and phone number) entries.
 * Raising Exceptions. I hadn't really done this before, either!
-* Python's argparse module. Whoa * this module is cool. This is the first time I've used it, and it was super interesting! I learned how to create parsers and subparsers, set default values for arguments, and set default functions to execute for each subparser.
+* Python's argparse module. Whoa - this module is cool. This is the first time I've used it, and it was super interesting! I learned how to create parsers and subparsers, set default values for arguments, and set default functions to execute for each subparser.
 * Tests! I had never written extensive tests before. I learned about Python's unittest and nose modules. I spent a lot of time thinking about how to design my test cases and how to test if any unexpected behavior occurred.
 
 The code for this project is on [GitHub](https://github.com/amygdalama/phonebook).
 
 ## Weekly Blog  
 
-I've maintained a slightly-more-frequent-than-weekly [blog](http://mathamy.com/) since starting Hacker School. I realized that writing is one of the ways I learn best * explaining things forces me to think very explicitly about them. Often, when I sit down to write a blog post, I realize that I didn't understand the topic as well as I thought, so I put in extra effort to understand the topic very well.
+I've maintained a slightly-more-frequent-than-weekly [blog](http://mathamy.com/) since starting Hacker School. I realized that writing is one of the ways I learn best - explaining things forces me to think very explicitly about them. Often, when I sit down to write a blog post, I realize that I didn't understand the topic as well as I thought, so I put in extra effort to understand the topic very well.
 
 Some posts:
 
@@ -82,7 +85,7 @@ Things I learned about:
 * Pelican, a static site-generator, like Octopress, but written in Python. Static site generators are super rad because they allow you to write posts in Markdown, which brings me to...
 * Markdown!
 * Git. I can't count how many times I accidentally deleted or corrupted my git repositories for my blog. Because I was really clumsy with Pelican at first, I'd often make horrible, horrible mistakes and then use git to revert changes. The worst was when I thought I merged something gracefully, published my changes, and then found a bunch of ">>> HEAD" marks floating all over my website. At 11pm. But, now. Now I am a master.
-* Git hooks, which allows you to run scripts before or after particular git commands. This was super wonderful because I have two separate repos for my blog * one for the content in Markdown and another for the HTML output that Pelican makes. Git hooks allows me to automatically add, commit, and push the output repo to GitHub any time I push the source repo. Super awesome.
+* Git hooks, which allows you to run scripts before or after particular git commands. This was super wonderful because I have two separate repos for my blog - one for the content in Markdown and another for the HTML output that Pelican makes. Git hooks allows me to automatically add, commit, and push the output repo to GitHub any time I push the source repo. Super awesome.
 * SimpleHTTPServer! I learned about the process of local development, and serving my site locally.
 * Jinja, a Python package which handles Pelican's templating.
 * CSS and HTML, and how they fit together.
