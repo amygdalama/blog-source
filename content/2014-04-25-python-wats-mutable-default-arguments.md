@@ -68,13 +68,15 @@ So then what really happens when we define default values for arguments? Let's s
 
 My usual go-to for questions like this is Python internals whiz and Hacker School Facilitator [Allison Kaptur](http://akaptur.github.io/), but you can also find the answer with a bit of [googling](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=python%20mutable%20default%20arguments). 
 
-So, without further ado, what actually happens when we define a default argument is that the value of the argument gets stored inside the function's `func_defaults` method. Let's look back at the `foo` function:
+So, without further ado, what actually happens when we define a default argument in Python 2.x is that the value of the argument gets stored inside the function's `func_defaults` method. (In 3.x, the values are stored in the `__defaults__` method.) 
+
+Let's look back at the `foo` function:
 
     >>> def foo(l=[]):
     ...     l.append('cat')
     ...     return l
 
-We can access `foo`'s `func_defaults` like so:
+In Python 2.x, we can access `foo`'s `func_defaults` like so:
 
     >>> foo.func_defaults
     ([],)
