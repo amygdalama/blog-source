@@ -141,4 +141,6 @@ When we call `baz` multiple times, its behavior is more expected:
     >>> baz()
     ['cat']
 
-Cool! Wat conquered. We should collect badges for all the wats we've battled and overcome.
+Cool! Wat conquered. We should collect badges for all the wats we've battled.  
+
+Thanks to [Mary Rose Cook](http://maryrosecook.com/) and [Allison Kaptur](http://akaptur.github.io/), who valiantly battled this wat with me.
