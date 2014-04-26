@@ -22,7 +22,7 @@ What happens when we call `foo` multiple times?
 
 Whoa! So mutating `l` actually mutates it for all future calls to the function. Weird.
 
-This means that the `[]` object is *only created once*, and each time we call `foo` without a argument, `l` is referring to that same object. This may lead you to form a hypothesis: `l=[]` is kind of like a name-binding statement that executes only once, when the function is defined. 
+This means that the `[]` object is *only created once*, and each time we call `foo` without an argument, `l` is referring to that same object. This may lead you to form a hypothesis: `l=[]` is kind of like a name-binding statement that executes only once, when the function is defined. 
 
 But, if that hypothesis is true, then how should we expect the following function to behave?
 
@@ -117,7 +117,7 @@ It appears as if the following happens when we define and call `bar`:
 1. `bar` is defined
     * the object `[]` is created and stored in the `func_defaults` tuple
 2. `bar` is called the first time:
-    * since we didn't pass in a value for `l` as a argument, Python looks in the `func_defaults` for the value to bind to the name `l`, and grabs the `[]` object that we created when we defined `bar`
+    * since we didn't pass in a value for `l` as an argument, Python looks in the `func_defaults` for the value to bind to the name `l`, and grabs the `[]` object that we created when we defined `bar`
     * `locals()` returns `{l : []}`
     * we reassign `l` to `['cat']` within the scope of `bar`. Since this is a reassignment, this doesn't modify the `[]` object contained in `func_defaults`. Instead, `l` is just bound to a different object in memory.
     * `['cat']` is returned
