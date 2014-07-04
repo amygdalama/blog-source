@@ -1,7 +1,7 @@
 Title: Pipeline
 Date: 2014-03-08
 Category: Projects
-Tags: 
+Tags:
 Slug: pipeline
 Author: Amy Hanlon
 Status: draft
@@ -20,6 +20,11 @@ Ideas for future posts:
     * some really good books and resources - LPTHW, Dive into Python, but stop reading them if you get bored!
 * What is the difference between a Python Expression vs a Statement
 * Class attributes wtf, also you can put code directly in a class outside of any function in the class
-* Figuring out tests - how to see if nose.tools.assert_raises(Exception, callable, args) actually executes the callable (i.e. if the callable causes side-effects usually, can you just check to see if the side effects happened immediately after the assert_rases statement?) To test - make the thing that you're assert_raise-ing create side effects, and then check to see if the side effects happened or not. (see phonebook tests.py script for details)
+* What is testing, really. And how do you do it.
+* What is Hacker School
+* How was Hacker School
+* Iron Forger: A Retrospective
+    * The Lazy Dictator Model
+* How I Prepared for Interviews
 
 
