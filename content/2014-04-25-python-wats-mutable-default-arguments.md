@@ -5,16 +5,18 @@ Tags: python, python internals
 Slug: python-wats-mutable-default-arguments
 Author: Amy Hanlon
 
-Let's look at a common Python [wat](https://www.destroyallsoftware.com/talks/wat) and try to figure out wat's actually happening!  
+Let's look at a common Python [wat](https://www.destroyallsoftware.com/talks/wat) and try to figure out wat's actually happening!
 
 We'll define a function, `foo`, which takes one argument, `l`, which has the default value of an empty list.
 
+    :::pycon
     >>> def foo(l=[]):
     ...     l.append('cat')
     ...     return l
 
 What happens when we call `foo` multiple times?
 
+    :::pycon
     >>> foo()
     ['cat']
     >>> foo()
@@ -22,15 +24,16 @@ What happens when we call `foo` multiple times?
 
 Whoa! So mutating `l` actually mutates it for all future calls to the function. Weird.
 
-This means that the `[]` object is *only created once*, and each time we call `foo` without an argument, `l` is referring to that same object. This may lead you to form a hypothesis: `l=[]` is kind of like a name-binding statement that executes only once, when the function is defined. 
+This means that the `[]` object is *only created once*, and each time we call `foo` without an argument, `l` is referring to that same object. This may lead you to form a hypothesis: `l=[]` is kind of like a name-binding statement that executes only once, when the function is defined.
 
 But, if that hypothesis is true, then how should we expect the following function to behave?
 
+    :::pycon
     >>> def bar(l=[]):
     ...     print locals()
     ...     l = ['cat']
     ...     return l
-    ... 
+    ...
     >>> bar()
     # ?
     >>> bar()
@@ -51,6 +54,7 @@ Well, if `l=[]` is *like a name-binding statement that executes only once* when 
 
 What actually happens?
 
+    :::pycon
     >>> bar()
     {'l': []}
     ['cat']
@@ -58,26 +62,28 @@ What actually happens?
     {'l': []}
     ['cat']
 
-Hrm. This behavior reasonably leads us to believe that the assignment `l=[]` happens *each time we call the function `bar`*. But in `foo`, `l=[]` can't be a statement that executes each time the function is called, or else we'd create a new `[]` each time. 
+Hrm. This behavior reasonably leads us to believe that the assignment `l=[]` happens *each time we call the function `bar`*. But in `foo`, `l=[]` can't be a statement that executes each time the function is called, or else we'd create a new `[]` each time.
 
-If we assume `l=[]` executes like a name-binding statement, then it must execute either (1) only once when the function is defined, or (2) each time the function is called. In `foo`, it only executes once, but in `bar`, it executes every time we call `bar`. That just can't be. So our assumption that `l=[]` executes like a name-binding statement leads to a contradiction, and thus must be wrong! 
+If we assume `l=[]` executes like a name-binding statement, then it must execute either (1) only once when the function is defined, or (2) each time the function is called. In `foo`, it only executes once, but in `bar`, it executes every time we call `bar`. That just can't be. So our assumption that `l=[]` executes like a name-binding statement leads to a contradiction, and thus must be wrong!
 
 Guess what, nerds! We kind of just did a [proof by contradiction](http://en.wikipedia.org/wiki/Proof_by_contradiction)!
 
 So then what really happens when we define default values for arguments? Let's see if we can figure out where the default values are stored.
 
-My usual go-to for questions like this is Python internals whiz and Hacker School Facilitator [Allison Kaptur](http://akaptur.github.io/), but you can also find the answer with a bit of [googling](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=python%20mutable%20default%20arguments). 
+My usual go-to for questions like this is Python internals whiz and Hacker School Facilitator [Allison Kaptur](http://akaptur.github.io/), but you can also find the answer with a bit of [googling](https://www.google.com/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=python%20mutable%20default%20arguments).
 
-So, without further ado, what actually happens when we define a default argument in Python 2.x is that the value of the argument gets stored inside the function's `func_defaults` method. (In 3.x, the values are stored in the `__defaults__` method.) 
+So, without further ado, what actually happens when we define a default argument in Python 2.x is that the value of the argument gets stored inside the function's `func_defaults` method. (In 3.x, the values are stored in the `__defaults__` method.)
 
 Let's look back at the `foo` function:
 
+    :::pycon
     >>> def foo(l=[]):
     ...     l.append('cat')
     ...     return l
 
 In Python 2.x, we can access `foo`'s `func_defaults` like so:
 
+    :::pycon
     >>> foo.func_defaults
     ([],)
     >>> foo()
@@ -87,6 +93,7 @@ In Python 2.x, we can access `foo`'s `func_defaults` like so:
 
 Aha! So the actual object that is being stored as the default for `foo` is being modified when we call `foo`! For fun, let's see if we can mutate the default value from outside of the function:
 
+    :::pycon
     >>> foo.func_defaults[0].append('dragon')
     >>> foo.func_defaults
     (['cat', 'dragon'],)
@@ -95,6 +102,7 @@ Aha! So the actual object that is being stored as the default for `foo` is being
 
 Eep! That was fun. So what's in the `func_defaults` of `bar`? Recall:
 
+    :::pycon
     >>> def bar(l=[]):
     ...     print locals()
     ...     l = ['cat']
@@ -102,12 +110,13 @@ Eep! That was fun. So what's in the `func_defaults` of `bar`? Recall:
 
 And then:
 
+    :::pycon
     >>> bar.func_defaults
     ([],)
     >>> bar()
     {'l': []}
     ['cat']
-    >>> bar.func_defaults 
+    >>> bar.func_defaults
     ([],)
 
 Okay! So since `bar` *reassigns* `l` to `['cat']`, it doesn't modify the object stored in `func_defaults`.
@@ -128,19 +137,21 @@ It appears as if the following happens when we define and call `bar`:
 
 I should probably also mention something more useful: a common way of setting a default value to an empty list (and having it actually work as expected) is to do the following:
 
-    def baz(l=None):
-        if not l:
-            l = []
-        l.append('cat')
-        return l
+    :::pycon
+    >>> def baz(l=None):
+    ...     if not l:
+    ...         l = []
+    ...     l.append('cat')
+    ...     return l
 
 When we call `baz` multiple times, its behavior is more expected:
 
+    :::pycon
     >>> baz()
     ['cat']
     >>> baz()
     ['cat']
 
-Cool! Wat conquered. We should collect badges for all the wats we've battled.  
+Cool! Wat conquered. We should collect badges for all the wats we've battled.
 
 Thanks to [Mary Rose Cook](http://maryrosecook.com/) and [Allison Kaptur](http://akaptur.github.io/), who valiantly battled this wat with me.
