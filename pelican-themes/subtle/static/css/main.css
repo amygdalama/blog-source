@@ -17,7 +17,7 @@
 body {
     background: url("https://raw2.github.com/amygdalama/blog-source/master/pelican-themes/subtle/static/css/noisy_grid.png");
     font-family: 'PT Serif', sans-serif;
-    font-size: 14px ;
+    font-size: 18px ;
     line-height: 1.429;
     margin: 0;
     padding: 0;
@@ -53,10 +53,6 @@ a:link, a:visited {
 	text-decoration: underline;
 }
 a:hover, a:active {
-	background-color: #C74451;
-	color: #fff;
-	text-decoration: none;
-	text-shadow: none;
 }
 
 h1 a:hover {
@@ -102,11 +98,24 @@ dl {margin: 0 0 1.5em 0;}
 dt {font-weight: bold;}
 dd {margin-left: 1.5em;}
 
-pre{
+pre {
 	font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
 	padding: 10px;
 	margin: 10px;
-	overflow: auto;}
+	overflow: auto;
+	font-size: .8em;
+}
+
+code {
+	font-family: Menlo,Monaco,"Andale Mono","lucida console","Courier New",monospace;
+	display: inline-block;
+	font-size: .8em;
+	color: #555;
+	border: 1px solid #ddd;
+	border-radius: 0.4em;
+	padding: 0 .3em;
+	margin: -1px 0;
+}
 
 /* Quotes */
 blockquote {
@@ -185,7 +194,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 	/* Main Nav */
 	#banner nav {
 		background: #000305;
-		font-size: 1.143em;
+		font-size: 1em;
 		height: 40px;
 		line-height: 30px;
 		margin: 0 auto 1em auto;
@@ -377,7 +386,6 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 .hentry img{display : none ;}
 
 .entry-title {
-	font-size: 2.5em;
 	font-weight: 900;
 	margin-bottom: 0px;
 	margin-top: 0;
