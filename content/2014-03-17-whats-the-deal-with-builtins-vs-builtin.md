@@ -1,4 +1,4 @@
-Title: What's the deal with __builtins__ vs __builtin__
+Title: What's the deal with <code>__builtins__</code> vs <code>__builtin__</code>
 Date: 2014-03-23
 Category: Projects
 Tags: python, builtins, hacker school, python internals
@@ -26,11 +26,11 @@ I read on [StackOverflow](http://stackoverflow.com/questions/11181519/python-wha
 
 > By default, when in the `__main__` module, `__builtins__` is the built-in module `__builtin__` (note: no 's'); when in any other module, `__builtins__` is an alias for the dictionary of the `__builtin__` module itself.
 
-What. What does that mean. 
+What. What does that mean.
 
 This talk of the "`__main__` module" and "any other module" reminds me of a sequence of words that I've known for quite a while, but haven't completely grokked:
 
-> We can access the name of the current module with the builtin variable `__name__`. 
+> We can access the name of the current module with the builtin variable `__name__`.
 
 You're probably familiar with the related canonical statement:
 
@@ -40,9 +40,9 @@ You're probably familiar with the related canonical statement:
 
 But what does "current module" mean? What does the `__name__` variable look like when it does not equal `__main__`?
 
-I happen to know, because I've obsessively read about the `import` statement, another sequence of words: 
+I happen to know, because I've obsessively read about the `import` statement, another sequence of words:
 
-> Any code executed as a result of an `import` isn't executed in the `__main__` module. 
+> Any code executed as a result of an `import` isn't executed in the `__main__` module.
 
 Let's use these bits of knowledge to observe the behavior of `__builtins__` both inside and outside of the `__main__` module. We can also check out the `__name__` variable while we're at it.
 
@@ -58,7 +58,7 @@ First, let's make a script, `a.py`, which will allow us to observe the behavior 
     print "type(__builtins__):", type(__builtins__)
 
 Let's see what happens when we execute `a.py`:
-    
+
     :::console
     $ python a.py
     In a
@@ -67,7 +67,7 @@ Let's see what happens when we execute `a.py`:
     type(__builtin__): <type 'module'>
     type(__builtins__): <type 'module'>
 
-Okay. So we're in the `__main__` module, and in here `__builtin__` is pointing to the same module object as `__builtins__`. 
+Okay. So we're in the `__main__` module, and in here `__builtin__` is pointing to the same module object as `__builtins__`.
 
 What happens if we `import a` in another script? The code in `a` will execute, but it won't be executed within the `__main__` module. Instead, it'll be executed within the `a` module. Let's write another script, `b.py`, to find out what happens to `__builtins__` outside of `__main__`:
 
@@ -104,10 +104,10 @@ Let's see what happens when we run `b.py`:
     type(__builtin__): <type 'module'>
     type(__builtins__): <type 'dict'>
 
-Aha. So when we're outside the context of the `__main__` module, `__name__` is just equal to the name of the module where code is currently being executed. That seems logical. And outside of `__main__`, `__builtins__` is a dict, rather than a module. 
+Aha. So when we're outside the context of the `__main__` module, `__name__` is just equal to the name of the module where code is currently being executed. That seems logical. And outside of `__main__`, `__builtins__` is a dict, rather than a module.
 
 We were told earlier that, outside the context of `__main__`, *"`__builtins__` is an alias for the dictionary of the `__builtin__` module"*. I think that means that `__builtins__ is __builtin__.__dict__`. Let's see if my hypothesis is true, by adding another line to the bottom of our `a.py` file:
-    
+
     :::python
     print "__builtins__ is __builtin__.__dict__", __builtins__ is __builtin__.__dict__
 
@@ -129,7 +129,7 @@ Running `b.py` again, we get:
     type(__builtins__): <type 'dict'>
     __builtins__ is __builtin__.__dict__ True
 
-Yes! My hypothesis was correct. Okay. So now I get why using `__builtin__` is better than `__builtins__`: 
+Yes! My hypothesis was correct. Okay. So now I get why using `__builtin__` is better than `__builtins__`:
 
 **The type, and thus behavior, of `__builtins__` changes based on the context of where it's being executed, while the type and behavior of `__builtin__` is constant. Rad.**
 

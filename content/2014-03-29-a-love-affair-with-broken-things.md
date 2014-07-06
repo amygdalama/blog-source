@@ -31,14 +31,16 @@ Her first example for showing how `map` works is fairly straightforward:
 
 > This is a simple map that takes a list of names and returns a list of the lengths of those names:
 >
+    :::python
     name_lengths = map(len, ["Mary", "Isla", "Sam"])
     print name_lengths
     # => [4, 4, 3]
 
-In the second example of `map`, we see that Mary uses a `lambda` function: 
+In the second example of `map`, we see that Mary uses a `lambda` function:
 
 > This is a map that squares every number in the passed collection:
 >
+    :::python
     squares = map(lambda x: x * x, [0, 1, 2, 3, 4])
     print squares
     # => [0, 1, 4, 9, 16]
@@ -49,10 +51,11 @@ But *why* does Mary use a `lambda` function here? Let's spend some time breaking
 
 First let's try removing the `lambda` and seeing what happens:
 
+    :::pycon
     >>> squares = map(x * x, [0, 1, 2, 3, 4])
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
-    NameError: name 'x' is not defined  
+    NameError: name 'x' is not defined
 
 Okay. `x` is not defined. That makes sense, because `x` isn't in our `locals` or our `globals` or our `builtins`. Remember that when Python sees the name of a variable, it looks in those three places for a definition of that variable. If Python doesn't find the variable in any of those places, it throws a `NameError`. `lambda` must temporarily add variables (here, `x`) to our namespace and then throw them away.
 
@@ -60,6 +63,7 @@ We removed the arm of the statue and a `NameError` was revealed. Cool. Now let's
 
 What if we tried using the `**` operator? Can we pass something like `**2` as the function for `map`? Let's try:
 
+    :::pycon
     >>> squares = map(**2, [0, 1, 2, 3, 4])
       File "<stdin>", line 1
         squares = map(**2, [0, 1, 2, 3, 4])
@@ -74,16 +78,17 @@ So the short story is I did some research to figure out how `**` Python operator
 
     power ::=  primary ["**" u_expr]
 
-The important thing to note is that any time Python sees `**` in this context, it expects a thing called a [`primary`](https://docs.python.org/2/reference/expressions.html#primaries) to come before it and a thing called a [`u_expr`](https://docs.python.org/2/reference/expressions.html#unary-arithmetic-and-bitwise-operations) to come after it. We can tell we violated this rule without even understanding what a `primary` or a `u_expr` is. We tried typing `**2`, which doesn't include anything that could be interpreted as a `primary` before the `**`. 
+The important thing to note is that any time Python sees `**` in this context, it expects a thing called a [`primary`](https://docs.python.org/2/reference/expressions.html#primaries) to come before it and a thing called a [`u_expr`](https://docs.python.org/2/reference/expressions.html#unary-arithmetic-and-bitwise-operations) to come after it. We can tell we violated this rule without even understanding what a `primary` or a `u_expr` is. We tried typing `**2`, which doesn't include anything that could be interpreted as a `primary` before the `**`.
 
-Okay. So we can't reconstruct Mary's function using `**` instead of `lambda`. 
+Okay. So we can't reconstruct Mary's function using `**` instead of `lambda`.
 
 What else could we try instead of a lambda function? Is there a function already defined in Python that does the same thing as the operator `**` but in function syntax?
 
-Let's [google](https://www.google.com/search?q=python+power+operator+function&oq=python+power+operator+function&aqs=chrome..69i57.426j0j1&sourceid=chrome&espv=210&es_sm=91&ie=UTF-8) "python power operator function." We quickly discover that there's a builtin `pow` function that takes two parameters, `x` and `y` and returns `x**y`. Cool! So `pow(x,2)` should return the same thing as `x**2`.  
+Let's [google](https://www.google.com/search?q=python+power+operator+function&oq=python+power+operator+function&aqs=chrome..69i57.426j0j1&sourceid=chrome&espv=210&es_sm=91&ie=UTF-8) "python power operator function." We quickly discover that there's a builtin `pow` function that takes two parameters, `x` and `y` and returns `x**y`. Cool! So `pow(x,2)` should return the same thing as `x**2`.
 
 Does the `pow` function work in our `map` function? Let's try!
 
+    :::pycon
     >>> squares = map(pow, [0, 1, 2, 3, 4])
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
@@ -91,23 +96,25 @@ Does the `pow` function work in our `map` function? Let's try!
 
 Oh, right. Derp. We need to pass `2` to `pow`, in addition to each element in our list. In the [documentation](https://docs.python.org/2.7/library/functions.html#map) for `map`, we see that if the function takes two arguments, we need to pass it two iterables. So we could do something kind of dumb like:
 
+    :::pycon
     >>> squares = map(pow, [0, 1, 2, 3, 4], [2, 2, 2, 2, 2])
     >>> squares
     [0, 1, 4, 9, 16]
 
 It works, but it's pretty ugly compared to the original:
 
+    :::pycon
     >>> squares = map(lambda x: x * x, [0, 1, 2, 3, 4])
 
-It seems silly to use a function, `pow`, that takes two arguments, when one of the arguments we pass it is always the same. 
+It seems silly to use a function, `pow`, that takes two arguments, when one of the arguments we pass it is always the same.
 
-Ohhh. 
+Ohhh.
 
-Maybe that's why Mary used `lambda`! To create a function that works kind of like `pow` but just takes one argument! 
+Maybe that's why Mary used `lambda`! To create a function that works kind of like `pow` but just takes one argument!
 
 So we broke the statue, attempted to reconstruct it, and then wound up with something way uglier than the original. And thus, through breaking Mary's code, her design decisions were revealed! And now we have a better understanding of why the original process was used!
 
 Breaking things is fucking rad.
-  
-  
+
+
 **Disclaimer:** This post is not intended to show the most pythonic way of squaring a list of integers. Instead, it is intended to show that we can discover how and why a code block works by exploring what happens when we remove chunks of it.

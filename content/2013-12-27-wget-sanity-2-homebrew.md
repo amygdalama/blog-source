@@ -20,7 +20,7 @@ worked flawlessly! Until matplotlib! I had all of the dependencies
 (freetype, which I installed via Homebrew, zlib, and libpng), but I kept
 getting thrown this error:
 
-    :::bash
+    :::text
     fatal error: 'freetype/config/ftheader.h' file not found
 
     #include <freetype/config/ftheader.h>

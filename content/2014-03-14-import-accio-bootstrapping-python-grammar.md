@@ -1,4 +1,4 @@
-Title: Replacing `import` with `accio`: A Dive into Bootstrapping and Python's Grammar
+Title: Replacing <code>import</code> with <code>accio</code>: A Dive into Bootstrapping and Python's Grammar
 Date: 2014-03-14
 Category: Projects
 Tags: python, harry potter, bootstrapping, cpython, compilers, grammar, hacker school, python internals
@@ -13,41 +13,38 @@ But before we get into compiling the Harry Potter Python I lovingly call Nagini,
 
 #Overwriting Builtin Functions
 
-Python builtin functions are stored in a module called `__builtins__` that's automatically imported on startup. 
+Python builtin functions are stored in a module called `__builtins__` that's automatically imported on startup.
 
-    :::text
+    :::pycon
     >>> dir(__builtins__)
     ['ArithmeticError', 'AssertionError', 'AttributeError', 'BaseException', 'BufferError', 'BytesWarning', 'DeprecationWarning', 'EOFError', 'Ellipsis', 'EnvironmentError', 'Exception', 'False', 'FloatingPointError', 'FutureWarning', 'GeneratorExit', 'IOError', 'ImportError', 'ImportWarning', 'IndentationError', 'IndexError', 'KeyError', 'KeyboardInterrupt', 'LookupError', 'MemoryError', 'NameError', 'None', 'NotImplemented', 'NotImplementedError', 'OSError', 'OverflowError', 'PendingDeprecationWarning', 'ReferenceError', 'RuntimeError', 'RuntimeWarning', 'StandardError', 'StopIteration', 'SyntaxError', 'SyntaxWarning', 'SystemError', 'SystemExit', 'TabError', 'True', 'TypeError', 'UnboundLocalError', 'UnicodeDecodeError', 'UnicodeEncodeError', 'UnicodeError', 'UnicodeTranslateError', 'UnicodeWarning', 'UserWarning', 'ValueError', 'Warning', 'ZeroDivisionError', '_', '__debug__', '__doc__', '__import__', '__name__', '__package__', 'abs', 'all', 'any', 'apply', 'basestring', 'bin', 'bool', 'buffer', 'bytearray', 'bytes', 'callable', 'chr', 'classmethod', 'cmp', 'coerce', 'compile', 'complex', 'copyright', 'credits', 'delattr', 'dict', 'dir', 'divmod', 'enumerate', 'eval', 'execfile', 'exit', 'file', 'filter', 'float', 'format', 'frozenset', 'getattr', 'globals', 'hasattr', 'hash', 'help', 'hex', 'id', 'input', 'int', 'intern', 'isinstance', 'issubclass', 'iter', 'len', 'license', 'list', 'locals', 'long', 'map', 'max', 'memoryview', 'min', 'next', 'object', 'oct', 'open', 'ord', 'pow', 'print', 'property', 'quit', 'range', 'raw_input', 'reduce', 'reload', 'repr', 'reversed', 'round', 'set', 'setattr', 'slice', 'sorted', 'staticmethod', 'str', 'sum', 'super', 'tuple', 'type', 'unichr', 'unicode', 'vars', 'xrange', 'zip']
 
-Overwriting Python builtins is surprisingly easy! 
+Overwriting Python builtins is surprisingly easy!
 
-    :::text
+    :::pycon
     >>> wingardium_leviosa = __builtins__.float
-
     >>> del __builtins__.float
-
     >>> float(3)
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
     NameError: name 'float' is not defined
-
     >>> wingardium_leviosa(3)
     3.0
 
 However, overwriting `import` is not so easy. Let's try:
 
-    :::text
+    :::pycon
     >>> accio = import
       File "<stdin>", line 1
         accio = import
                      ^
     SyntaxError: invalid syntax
 
-Python is expecting the name of a module after `import`, and thus it throws a `SyntaxError`. This is an effect of `import x` being a *statement*, rather than a *function*. 
+Python is expecting the name of a module after `import`, and thus it throws a `SyntaxError`. This is an effect of `import x` being a *statement*, rather than an *expression*.
 
 Hm. I remember seeing the function `__import__` listed when we ran `dir(__builtins__)`. Maybe we can overwrite that instead:
 
-    :::text
+    :::pycon
     >>> accio = __builtins__.__import__
     >>> accio sys
       File "<stdin>", line 1
@@ -59,15 +56,15 @@ Hm. I remember seeing the function `__import__` listed when we ran `dir(__builti
 
 What if we tried calling `accio` like a function?
 
-    :::text
+    :::pycon
     >>> accio(sys)
     Traceback (most recent call last):
       File "<stdin>", line 1, in <module>
-    NameError: name 'sys' is not defined 
-    
+    NameError: name 'sys' is not defined
+
 Maybe we need to pass 'sys' as a string?
 
-    :::text
+    :::pycon
     >>> accio('sys')
     <module 'sys' (built-in)>
 
@@ -77,22 +74,22 @@ Maybe we need to pass 'sys' as a string?
     >>> sys
     <module 'sys' (built-in)>
 
-Aha. So the statement `import x` probably does something like:  
-    1. call the `__import__` function on `x`: `__builtins__.__import__('x')`  
-    2. assign the name `x` to the module returned by `__import__`  
+Aha. So the statement `import x` probably does something like:
+    1. call the `__import__` function on `x`: `__builtins__.__import__('x')`
+    2. assign the name `x` to the module returned by `__import__`
 
 And `import sys` is like shorthand for the command:
 
-    :::text
+    :::pycon
     >>> sys = __builtins__.__import__('sys')
 
 (Here I'm only describing simple `import` statements, but more complex statements like `from x import y.w, y.z` work similarly.)
 
-So we have a way to add `accio` as a function, but not as a statement. I'm unsatisfied. 
+So we have a way to add `accio` as a function, but not as a statement. I'm unsatisfied.
 
 For fun, can we delete import?
 
-    :::text
+    :::pycon
     >>> del import
       File "<stdin>", line 1
         del import
@@ -113,7 +110,7 @@ So, to completely overwrite `import` with `accio`, we'll need to learn where Pyt
 
 Eli Bendersky wrote a great [blog post](http://eli.thegreenplace.net/2010/06/30/python-internals-adding-a-new-statement-to-python/) about adding an `until` statement to Python. Since we want to *replace* a statement, rather than add one, our method will be a bit different.
 
-Regardless, it looks like the place to start for changing Python's statements is in the `Grammar` file in the Python [source code](http://docs.python.org/devguide/setup.html). **Python source code!** Isn't this *fun?!* 
+Regardless, it looks like the place to start for changing Python's statements is in the `Grammar` file in the Python [source code](http://docs.python.org/devguide/setup.html). **Python source code!** Isn't this *fun?!*
 
 Python's source code is stored in a Mercurial repository, so first we'll have to install Mercurial.
 
@@ -143,7 +140,7 @@ I get a warning message saying some modules were unable to be built, but I am un
 
 It seems like the place to start is in the file `Grammar/Grammar`, so let's start poking around there. [This](http://docs.python.org/2/reference/grammar.html) is what it looks like. Searching for 'import' brings us to lines 52-60:
 
-    :::text     # figure out how to do line nos
+    :::python
     import_stmt: import_name | import_from
     import_name: 'import' dotted_as_names
     import_from: ('from' ('.'* dotted_name | '.'+)
@@ -180,7 +177,7 @@ So then we wonder - when CPython is compiling, does it execute Python scripts wi
 
 Let's look into one of the .py scripts within `Lib` to investigate. Here's the first line of the `Lib/keyword.py` script:
 
-    :::text
+    :::python
     #! /usr/bin/env python
 
 Aha! This script is executed via our environment Python! Our environment Python only understands `import`. So `keyword.py` needs to have `import` and not `accio`. However, since we got a `SyntaxError` on an `import` statement, that must mean that at least sometimes during the process of compiling we're required to use `accio` instead of `import`. Hrm... Any ideas?
@@ -190,8 +187,8 @@ Aha! This script is executed via our environment Python! Our environment Python 
 What if we did something crazy like compiled an intermediary Python that understands *both* `accio` *and* `import`, and used *that* Python to compile *another* Python that only understands `accio`? (Full credit for this idea goes to [Allison Kaptur](http://akaptur.github.io/).)
 
 So, for our intermediary Python we'll need to edit the `Grammar` file like so:
-    
-    :::text
+
+    :::python
     import_name: 'import' dotted_as_names | 'accio' dotted_as_names
     import_from: (('from' ('.'* dotted_name | '.'+)
                   'import' ('*' | '(' import_as_names ')' | import_as_names)) |
@@ -220,13 +217,13 @@ Now we'll need to duplicate this entire `cpython` directory and make our final P
 
 We want to change the `Grammar` file for this Python to only allow `accio`:
 
-    :::text
+    :::python
     import_name: 'accio' dotted_as_names
     import_from: ('from' ('.'* dotted_name | '.'+)
                   'accio' ('*' | '(' import_as_names ')' | import_as_names))
 
 And then we want to replace every instance of `import` in every .py file to `accio`. We'll use a blackbox bash command to accomplish that:
-    
+
     :::bash
     $ for i in `find . -name '*.py'`; do sed -i '' 's/[[:<:]]import[[:>:]]/accio/g' $i; done
 
@@ -246,7 +243,7 @@ Let's make a symlink to this Python...
 
 And fire it up...
 
-    :::pytb
+    :::pycon
     >>> import sys
       File "<stdin>", line 1
         import sys
@@ -263,4 +260,4 @@ HOLY SHIT IT WORKS!
 
 That's it. We just compiled two Pythons and fooled around with source code for the sake of a joke. Grab yourselves a beer, friends. Victory.
 
-My super messy and not-really-prepared-for-the-general-public GitHub [repo](https://github.com/amygdalama/nagini) contains both versions of Python, for reference. 
+My super messy and not-really-prepared-for-the-general-public GitHub [repo](https://github.com/amygdalama/nagini) contains both versions of Python, for reference.

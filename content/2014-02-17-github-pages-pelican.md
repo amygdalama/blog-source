@@ -23,40 +23,37 @@ There's a plethora of material online on Pelican and GitHub pages, but it is fai
 
 2. Run Pelican [quickstart](http://docs.getpelican.com/en/3.1.1/getting_started.html#kickstart-a-blog)
 
-	This will ask you lots of questions that probably seem foreign. These questions will set up some configuration files that you can later edit with your preferred [settings](http://docs.getpelican.com/en/3.1.1/settings.html). As an example, here's how I answered (I put my responses on separate lines starting with `>` to make this easier to read):
+	This will ask you lots of questions that probably seem foreign. These questions will set up some configuration files that you can later edit with your preferred [settings](http://docs.getpelican.com/en/3.1.1/settings.html). As an example, here's how I answered:
 
 	  	:::console
 	  	$ pelican-quickstart
-		Where do you want to create your new web site? [.]  
-		>  
-		What will be the title of this web site?  
-		> Amy Hanlon  
-		Who will be the author of this web site?  
-		> Amy Hanlon  
-		What will be the default language of this web site? [en]  
-		> 
-		Do you want to specify a URL prefix? e.g., http://example.com   (Y/n) 
-		> y  
-		What is your URL prefix? (see above example; no trailing slash) 
-		> http://amygdalama.github.io  
-		Do you want to enable article pagination? (Y/n) 
-		> y  
-		How many articles per page do you want? [10] 
-		>  
-		Do you want to generate a Fabfile/Makefile to automate generation and publishing? (Y/n) 
-		> y  
-		Do you want an auto-reload & simpleHTTP script to assist with theme and site development? (Y/n) 
-		> y  
-		Do you want to upload your website using FTP? (y/N) 
-		> n  
-		Do you want to upload your website using SSH? (y/N) 
-		> n  
-		Do you want to upload your website using Dropbox? (y/N) 
-		> n  
-		Do you want to upload your website using S3? (y/N) 
-		> n  
-		Do you want to upload your website using Rackspace Cloud Files? (y/N) 
-		> n  
+		Where do you want to create your new web site? [.]
+		What will be the title of this web site?
+		> Amy Hanlon
+		Who will be the author of this web site?
+		> Amy Hanlon
+		What will be the default language of this web site? [en]
+		Do you want to specify a URL prefix? e.g., http://example.com   (Y/n)
+		> y
+		What is your URL prefix? (see above example; no trailing slash)
+		> http://amygdalama.github.io
+		Do you want to enable article pagination? (Y/n)
+		> y
+		How many articles per page do you want? [10]
+		Do you want to generate a Fabfile/Makefile to automate generation and publishing? (Y/n)
+		> y
+		Do you want an auto-reload & simpleHTTP script to assist with theme and site development? (Y/n)
+		> y
+		Do you want to upload your website using FTP? (y/N)
+		> n
+		Do you want to upload your website using SSH? (y/N)
+		> n
+		Do you want to upload your website using Dropbox? (y/N)
+		> n
+		Do you want to upload your website using S3? (y/N)
+		> n
+		Do you want to upload your website using Rackspace Cloud Files? (y/N)
+		> n
 
 	Now if you type the `tree` command within your blog's main directory, you should see:
 
@@ -77,13 +74,13 @@ There's a plethora of material online on Pelican and GitHub pages, but it is fai
 
 	* `Makefile` tells the command `make` what to do. This file defines commands like `make devserver`. More information on `make` can be found [here](http://www.gnu.org/software/make/manual/make.html). I'll cover more on how to use this command for developing your site in the **Generating Your Site** section.
 
-	* `content` is the directory that should house all of your Markdown files. Pelican assumes that your articles/blog posts will be inside this directory. Additionally, there are some special directories you should create within `content`:  
+	* `content` is the directory that should house all of your Markdown files. Pelican assumes that your articles/blog posts will be inside this directory. Additionally, there are some special directories you should create within `content`:
 
 		 	:::bash
 		 	$ mkdir content/pages
 		 	$ mkdir content/images
 
-		Pelican by default is configured to know that your pages (i.e. static pages like About Me, Contact, etc) are found within this `pages` directory and that images are found within the `images` directory.  
+		Pelican by default is configured to know that your pages (i.e. static pages like About Me, Contact, etc) are found within this `pages` directory and that images are found within the `images` directory.
 
 	* `develop_server.sh` is a bash script that I believe handles serving your site locally during development (i.e. it serves your site to [http://localhost:8000](http://localhost:8000)).
 
@@ -97,7 +94,7 @@ There's a plethora of material online on Pelican and GitHub pages, but it is fai
 
 ##Exporting Existing Content
 
-This section assumes you have existing content on a WordPress blog. Pelican also has an importer for Dotclear and RSS/Atom feeds. You can skip this section if you don't have existing content living elsewhere that you want to port to your site on GitHub Pages.  
+This section assumes you have existing content on a WordPress blog. Pelican also has an importer for Dotclear and RSS/Atom feeds. You can skip this section if you don't have existing content living elsewhere that you want to port to your site on GitHub Pages.
 
 1. [Export WordPress content to XML](http://en.blog.wordpress.com/2006/06/12/xml-import-export/)
 2. [Imperfectly convert the XML to Markdown using Pelican](http://docs.getpelican.com/en/3.1.1/importer.html)
@@ -107,14 +104,14 @@ This section assumes you have existing content on a WordPress blog. Pelican also
 
 ##Pelican Themes
 1. Clone the available [Pelican Themes](https://github.com/getpelican/pelican-themes) into your blog's main directory.
-	
+
 		:::bash
 		$ git clone https://github.com/getpelican/pelican-themes
 
 2. Choose a theme you'd like to use. Pelican by default comes with the notmyidea and simple themes. Most other themes have a sample image in the pelican-themes repo to help you decide.
 
 3. After you've chosen a theme, set the THEME variable in your `pelicanconf.py` file to the absolute or relative path to the theme. For example, I'm using the subtle theme and added this line to my `pelicanconf.py` file:
-	
+
 		:::python
 		THEME = "pelican-themes/subtle"
 
@@ -123,7 +120,7 @@ This section assumes you have existing content on a WordPress blog. Pelican also
 ##Customization
 All elements of your theme are customizable! You can change attributes of text like font, size, color, and more in the `main.css` file found in your theme's directory. For example, I've made many edits to the file `pelican-themes/subtle/static/css/main.css`.
 
-Similarly, you can change layouts of your pages (like what shows up in your site nav menu) by exploring the HTML files in the `templates` folder within your theme. There will usually be a `base.html` file (or something similar) that provides the foundation for things like your header and site nav menu that will apply to every page. 
+Similarly, you can change layouts of your pages (like what shows up in your site nav menu) by exploring the HTML files in the `templates` folder within your theme. There will usually be a `base.html` file (or something similar) that provides the foundation for things like your header and site nav menu that will apply to every page.
 
 There should also be HTML files that serve as templates for specific types of pages. For example, `article.html` defines the basic structure for your articles/blog posts. If you want to change the metadata that displays above article content, you should look there.
 
@@ -148,7 +145,7 @@ However, if you do this, GitHub won't generate your site! It isn't smart enough 
 The best solution I've come up with so far (and please email me if you know of a better solution!) is to create two separate repositories - one inside the `output` directory where Pelican generates your HTML (this repo should have *username.github.io* on GitHub as a remote), and another in your blog's main directory with your source Markdown files (in `content`), theme, and configuration files (this repo should have a different remote on GitHub).
 
 In the terminal, move to the `output` directory, and initialize a git repo. Add a remote pointing to the repo you created on GitHub (called *username.github.io*), add all the files you want to commit, commit, and push changes to the remote repository.
-	
+
 	:::bash
 	$ cd output
 	$ git init
@@ -164,7 +161,7 @@ If you use this method, you'll want to change the following setting to `False` i
 
 Otherwise if you use the `publishconf.py` file as your settings file when running the `pelican` command, you'll delete your git repo!
 
-Similarly, don't use the `make clean` command! If you poke around the `Makefile`, you'll see that `make clean` runs `rm -rf output` which will delete all files (including your git repo) in your output folder. 
+Similarly, don't use the `make clean` command! If you poke around the `Makefile`, you'll see that `make clean` runs `rm -rf output` which will delete all files (including your git repo) in your output folder.
 
 If you accidentally delete the repo in your output folder, it's not a *huge* deal (I've done it like 5 times playing with different commands and settings). Just clone your remote *username.github.io* repo into a new, empty `output` folder, re-generate your site with any changes you've made since your last push to the remote, and then commit and push the changes to the remote:
 
