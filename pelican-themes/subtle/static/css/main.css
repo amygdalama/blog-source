@@ -96,7 +96,6 @@ ol {
 }
 
 .summary-tags {
-	margin-left: 190px;
 }
 
 .readmore { float: right }
@@ -417,11 +416,10 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 }
 
 .other-articles {
-	font-size: 3em;
+	font-size: 2.5em;
 }
 
 .entry-summary {
-	margin-left: 190px;
 }
 
 .hentry h1 {
@@ -445,7 +443,7 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 .hentry .post-info * {font-style: normal;}
 
 	/* Content */
-	.hentry footer {margin-bottom: 2em;}
+/*	.hentry footer {margin-bottom: 2em;}*/
 	.hentry footer address {display: inline;}
 	#posts-list footer address {display: block;}
 
@@ -454,11 +452,6 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 	#posts-list .hentry {padding-left: 10px; position: relative;}
 
 	#posts-list footer {
-		left: 10px;
-		position: relative;
-        float: left;
-		top: 0.5em;
-		width: 190px;
 	}
 
 	/* About the Author */
