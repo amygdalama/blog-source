@@ -1,7 +1,7 @@
-Title: Biography
+Title: About
 Date: 2012-10-05 21:00
 Author: Amy Hanlon
-Slug: bio
+Slug: about
 
 <img style="float:left" src="https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg" />
 
