@@ -225,7 +225,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 	Featured
 *****************/
 #featured {
-
+	background-color: white;
 	background-position: top,bottom,top;
 	margin-bottom: 2em;
 	overflow: hidden;
@@ -255,6 +255,7 @@ img.left, figure.left {float: right; margin: 0 0 2em 2em;}
 	Body
 *****************/
 #content {
+	background-color: white;
 	background-position: top,bottom,top;
 	margin-bottom: 2em;
 	overflow: hidden;
