@@ -26,5 +26,7 @@ Ideas for future posts:
 * Iron Forger: A Retrospective
     * The Lazy Dictator Model
 * How I Prepared for Interviews
+* Writing a brainfuck interpreter
+* Creating a chat server
 
 
