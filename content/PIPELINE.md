@@ -28,5 +28,9 @@ Ideas for future posts:
 * How I Prepared for Interviews
 * Writing a brainfuck interpreter
 * Creating a chat server
-
-
+* Things to do on bad days
+    * Help someone with something
+    * Sit in the park
+    * Do mundane work that needs to get done and is possible to do from your bed, under your blankets, like calling the bank, etc
+    * Take a bath
+    * Get a massage
