@@ -39,3 +39,5 @@ GOOGLE_ANALYTICS = "UA-48330831-1"
 
 DISQUS_SITENAME = "mathamy"
 
+PAGE_PATHS = ['pages', 'tutorials']
+
