@@ -3,7 +3,7 @@ Date: 2012-10-05 21:00
 Author: Amy Hanlon
 Slug: about
 
-<img style="float:right" src="https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg" />
+<img style="float:right; padding-left:10px" src="https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg" />
 
 I'm in the W'14 batch at [Hacker School], where my main focus is to learn Python intimately well. See my [Projects](http://mathamy.com/pages/projects.html) page for details on what I've been working on.
 
