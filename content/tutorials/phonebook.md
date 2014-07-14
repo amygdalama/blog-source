@@ -51,11 +51,14 @@ The application will have a command line interface. The program should support t
 There are many different approaches to solving this problem. Depending on the approach you choose and your experience level, you'll have the opportunity to learn about:
 
 * argument parsing
-* structuring your code
 * data structures that allow fast lookup
 * looking through strings for matches
 * writing tests
 * using a database
+
+## How to read this tutorial
+
+
 
 ## Argument parsing
 
