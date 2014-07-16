@@ -148,11 +148,47 @@ into this:
 
 This works even though `args` is a list and not a tuple!
 
-#### *3.3.2 Error handling
+#### *3.3.2 Mapping commands to functions
+
+This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
+
+Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
+
+    :::python
+    command_funcs = {
+        'create' : create,  # create is a function defined elsewhere
+        'add' : add,
+        'update' : update,
+        'delete' : delete,
+        'lookup' : lookup,
+        'reverse-lookup' : reverse_lookup
+    }
+
+Having functions as values in a dictionary might be pretty foreign at first, but it can be really useful, as we're about to see!
+
+We can look up the appropriate function for the given command like this:
+
+    :::python
+    func = command_funcs[command]
+
+Here the variable `command` is the main command you grabbed from the command line arguments. `func` is the function associated with `command` in the `command_funcs` dictionary we created.
+
+To invoke `func`, we could try:
+
+    :::python
+    func()
+
+But we need to figure out how to pass the appropriate arguments to `func`. `func` could be any of `create`, `add`, `update`, `delete`, etc. These functions take varying number of arguments. So how can we pass the correct number of arguments to `func` without a messy `if` statement?
+
+This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
+
+# 4. Raising Exceptions
 
 What happens when a user passes an incorrect number of arguments? Try giving your program too few arguments. Now try with too many arguments.
 
-Our users might find it useful for us to `print` descriptive error messages if the number of arguments is incorrect. How could we add this to our program?
+Our users might find it useful for us to `print` descriptive error messages if the number of arguments is incorrect. How could we add this to our progam?
+
+## 4.1 Invalid number of arguments
 
 We could do something like this:
 
@@ -207,47 +243,22 @@ You should see an error message like this:
 
 Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
-#### *3.3.3 Mapping commands to functions
+## 4.2 Invalid entries
 
-This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
+What happens when a user enters an invalid number?
 
-Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
+# 5. Writing Tests
 
-    :::python
-    command_funcs = {
-        'create' : create,  # create is a function defined elsewhere
-        'add' : add,
-        'update' : update,
-        'delete' : delete,
-        'lookup' : lookup,
-        'reverse-lookup' : reverse_lookup
-    }
+# 6. Data Persistence
 
-Having functions as values in a dictionary might be pretty foreign at first, but it can be really useful, as we're about to see!
+# 7. Partial String Matching
 
-We can look up the appropriate function for the given command like this:
+# 8. Further Reading
 
-    :::python
-    func = command_funcs[command]
+# Appendix
 
-Here the variable `command` is the main command you grabbed from the command line arguments. `func` is the function associated with `command` in the `command_funcs` dictionary we created.
+## Subclasses (possible)
 
-To invoke `func`, we could try:
+## Further Reading
 
-    :::python
-    func()
-
-But we need to figure out how to pass the appropriate arguments to `func`. `func` could be any of `create`, `add`, `update`, `delete`, etc. These functions take varying number of arguments. So how can we pass the correct number of arguments to `func` without a messy `if` statement?
-
-This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
-
-
-## *3.4 Using the `argparse` module
-
-If you already know how to manually write an argument parser, try reading this section to learn about the `argparse` module.
-
-# 4. Writing Tests
-
-# 5. Data Persistence
-
-# 6. Partial String Matching
+* The `argparse` module
