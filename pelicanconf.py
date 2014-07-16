@@ -41,3 +41,5 @@ DISQUS_SITENAME = "mathamy"
 
 PAGE_PATHS = ['pages', 'tutorials']
 
+MD_EXTENSIONS = ['codehilite(css_class=highlight)','extra', 'toc']
+
