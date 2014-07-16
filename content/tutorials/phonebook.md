@@ -243,6 +243,15 @@ You should see an error message like this:
 
 Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
+## 4.2 Invalid arguments
+
+What happens when a user enters an invalid phone number? A user might expect to receive an error if they tried entering:
+
+    :::python
+    $ python phonebook.py add 'Jane Doe' 'cat'
+
+This is the correct *number* of arguments, but the user is attempting to enter the string `'cat'` where the phone number is supposed to go. Maybe we should verify phone numbers before we store them.
+
 # 5. Writing Tests
 
 # 6. Data Persistence
