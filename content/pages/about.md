@@ -5,11 +5,14 @@ Slug: about
 
 <img style="float:right; padding-left:10px" src="https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg" />
 
-I'm in the W'14 batch at [Hacker School], where my main focus is to learn Python intimately well. See my [Projects](http://mathamy.com/pages/projects.html) page for details on what I've been working on.
+I'm a Software Engineer based in Brooklyn.
 
-My background is in Theoretical Math. After college I optimized paid search ads for Adam & Eve, so I basically used to sell, ehem, Adult Products on the internet (though my employer was [Adlucent], an agency in Austin, TX). I then used machine learning via [scikit-learn](http://scikit-learn.org/stable/) to automate tasks like classification of search queries into product categories.
+I recently attended [Hacker School](https://www.hackerschool.com/), where I worked on projects like compiling a Harry Potter-themed Python interpreter and converting a picture of my cat to sound.
 
-I will nerd out with you about programming, science fiction, feminism, comics, Dune (I <3 Dune. Dune, Dune, Dune.), math, and board games. I also think it's fabulous to drink champagne in bed.
+Previously I studied pure math and did some data analysis and machine learning in Austin, TX.
+
+I love teaching programming, playing board games, and reading Dune.
+
 
 [white_bg]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg
 [Adlucent]: http://www.adlucent.com/
