@@ -6,8 +6,6 @@ Status: hidden
 
 Let's make a command line tool for managing phonebook entries!
 
-[TOC]
-
 # Prologue
 
 Depending on your learning style and experience level, you might get through all of these chapters. Or you might just get through the first one. That's okay! The main priority for this exercise is to write a lot of code and understand what the code you're writing does. Don't worry about "finishing", whatever that means.
@@ -15,6 +13,10 @@ Depending on your learning style and experience level, you might get through all
 If you don't understand a phrase or a line of code that I use, try googling it! A huge part of becoming a better programmer is learning how to google things you don't understand. If that doesn't help, ask me! I enjoy explaining things.
 
 Most of the chapters are split up into sections roughly ordered by difficulty level. The more difficult sections are marked as optional. Also, feel free to skip or skim through the sections that cover content you're already familiar with.
+
+# Table of Contents
+
+[TOC]
 
 # 1. Specifications
 
@@ -77,7 +79,7 @@ If you don't know why I included an `if __name__ == '__main__'` statement, try g
 
 If you don't know how to parse arguments passed to the Python interpreter from the command line, see if you can figure out how to do it by googling. Maybe google "python command line arguments" as a start.
 
-## 3.1 Intro to argument parsing
+## 3.1 Accessing command line arguments
 
 Arguments passed to Python scripts from the command line are accessible using the `sys` module. Here's a simple example script that prints out the arguments passed to the Python interpreter:
 
@@ -85,15 +87,15 @@ Arguments passed to Python scripts from the command line are accessible using th
     # ex.py
     import sys
 
-    print "The arguments given to the interpreter are: "
+    print "The arguments given to the interpreter are:"
     print sys.argv
 
 What happens when you execute the script giving it some arguments?
 
     :::console
-    $ python ex.py red flowers hi
+    $ python ex.py cats dragons frogs
     The arguments given to the interpreter are:
-    ['ex.py', 'red', 'flowers', 'hi']
+    ['ex.py', 'cats', 'dragons', 'frogs']
 
 So `sys.argv` is a list, containing the name of the script (`'ex.py'`), and then the three arguments we passed, all represented as strings.
 
@@ -102,6 +104,9 @@ So `sys.argv` is a list, containing the name of the script (`'ex.py'`), and then
 For your phonebook application, you might choose to manually parse your arguments, which could look something like this:
 
     :::python
+    # skeleton code from ch2 defining your functions
+    # like create_phonebook and add_entry
+
     if __name__ == '__main__':
         args = sys.argv
         script = args.pop(0)    # name of script is first arg
@@ -147,9 +152,45 @@ This works even though `args` is a list and not a tuple!
 
 What happens when a user passes an incorrect number of arguments? Try giving your program too few arguments. Now try with too many arguments.
 
-Our users might find it useful for us to `raise` or `print` descriptive error messages if the number of arguments is incorrect. How could we add this to our program?
+Our users might find it useful for us to `print` descriptive error messages if the number of arguments is incorrect. How could we add this to our program?
 
-If you don't know how to `raise` exceptions and you want to learn, now is a great time! google it!
+We could do something like this:
+
+    :::python
+    if command == 'create':
+        if args:
+            phonebook_name = args.pop(0)
+            create_phonebook(phonebook_name)
+        else:
+            print "Not enough arguments!"
+
+Using `print` statements to indicate that an invalid number of arguments were passed is sufficient for now, but will make writing tests difficult.
+
+For example, let's say we wanted to test that running our program with the command
+
+    :::console
+    $ python phonebook.py create
+
+(which is missing an argument for the phonebook name) caused an error. How would we do that? Well, we could manually type in the command and observe the results. But would we want to do that with every command variation? And for too many arguments as well as too few? That quickly becomes too many things to remember to test manually.
+
+Thankfully, testing frameworks like Python's `unittest` provide methods that test whether code `raise`s a specific exception. We'll cover more on testing and using `unittest` in the next chapter.
+
+To make writing tests easier, we can define a custom exception that we'll call `ArgumentError`. To do this we just need to subclass it from the built-in `Exception` class:
+
+    :::python
+    class ArgumentError(Exception): pass
+
+Now to `raise` this exception when an invalid number of arguments is passed:
+
+    :::python
+    if command == 'create':
+        if args:
+            phonebook_name = args.pop(0)
+            create_phonebook(phonebook_name)
+        else:
+            raise ArgumentError("Not enough arguments!")
+
+Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
 #### *3.3.3 Mapping commands to functions
 
@@ -190,8 +231,8 @@ This is where the super awesome `*args` comes in handy. Try reading up on `*args
 
 If you already know how to manually write an argument parser, try reading this section to learn about the `argparse` module.
 
-# 4. Data Persistence
+# 4. Writing Tests
 
-# 5. Partial String Matching
+# 5. Data Persistence
 
-# 6. Writing Tests
+# 6. Partial String Matching
