@@ -6,7 +6,17 @@ Status: hidden
 
 Let's make a command line tool for managing phonebook entries!
 
-# Specifications
+[TOC]
+
+# Prologue
+
+Depending on your learning style and experience level, you might get through all of these chapters. Or you might just get through the first one. That's okay! The main priority for this exercise is to write a lot of code and understand what the code you're writing does. Don't worry about "finishing", whatever that means.
+
+If you don't understand a phrase or a line of code that I use, try googling it! A huge part of becoming a better programmer is learning how to google things you don't understand. If that doesn't help, ask me! I enjoy explaining things.
+
+Most of the chapters are split up into sections roughly ordered by difficulty level. The more difficult sections are marked as optional. Also, feel free to skip or skim through the sections that cover content you're already familiar with.
+
+# 1. Specifications
 
 We'll make a [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application that will support creating, retrieving, updating, and deleting phonebook entries consisting of a name and a phone number.
 
@@ -46,29 +56,7 @@ The application will have a command line interface supporting the following comm
     Error: 'John Doe' does not exist in ex_phonebook.pb
 
 
-# About this exercise
-
-This exercise can be organized into the following sections:
-
-* planning & organizing
-* argument parsing
-* data persistence
-* partial string matching
-* writing tests
-
-Depending on your learning style and experience level, you might get through all of these sections. Or you might just get through the first one. That's okay! The main priority for this exercise is to write a lot of code and understand what the code you're writing does. Don't worry about "finishing", whatever that means.
-
-If you don't understand a phrase or a line of code that I use, try googling it! A huge part of becoming a better programmer is learning how to google things you don't understand. If that doesn't help, ask me! I enjoy explaining things.
-
-Most of the sections are split up into different methods by experience level. You can work on this exercise in a number of different ways, including:
-
-* for each section, choose one method to complete, and then move on to the next section
-* for each section, begin at the first method and then refactor your code as you level up to more advanced methods
-
-Both of these strategies (or anything in between) will work well. Do whichever you think works best with your learning style and current experience level. With the first strategy, you'll be more likely to end up with a completed product. With the second strategy, you'll be more likely to end up with thorough understanding of a couple sections.
-
-
-# Part I: Planning & Organizing
+# 2. Planning & Organizing
 
 What are the functions that you'll need for your program? What arguments will each of those functions need? Write a skeleton program that has those functions definitions, but where the functions just `pass`, rather than actually doing anything.
 
@@ -85,13 +73,11 @@ Here is an example skeleton program with a function definition for `create`ing a
 
 If you don't know why I included an `if __name__ == '__main__'` statement, try googling it! Now is an excellent time to find out.
 
-# Part II: Argument parsing
+# 3. Argument parsing
 
 If you don't know how to parse arguments passed to the Python interpreter from the command line, see if you can figure out how to do it by googling. Maybe google "python command line arguments" as a start.
 
-If you already know a bit about argument parsing, and want to learn about a Python module that helps with more advanced argument parsing, skip to the "Using the `argparse` module" section.
-
-## Intro to argument parsing
+## 3.1 Intro to argument parsing
 
 Arguments passed to Python scripts from the command line are accessible using the `sys` module. Here's a simple example script that prints out the arguments passed to the Python interpreter:
 
@@ -111,24 +97,11 @@ What happens when you execute the script giving it some arguments?
 
 So `sys.argv` is a list, containing the name of the script (`'ex.py'`), and then the three arguments we passed, all represented as strings.
 
-## Rolling your own argument parser
+## 3.2 Rolling your own argument parser
 
 For your phonebook application, you might choose to manually parse your arguments, which could look something like this:
 
     :::python
-    import sys
-
-
-    def create_phonebook(phonebook_name):
-        # placeholder for create_phonebook function
-        pass
-
-
-    def add_entry(name, number, phonebook_name):
-        # placeholder for add_entry function
-        pass
-
-
     if __name__ == '__main__':
         args = sys.argv
         script = args.pop(0)    # name of script is first arg
@@ -136,13 +109,13 @@ For your phonebook application, you might choose to manually parse your argument
 
         if command == 'create':
             phonebook_name = args.pop(0)
-            create_phonebook(phonebook_name)
+            create_phonebook(phonebook_name)    # create_phonebook function should be defined above
 
         elif command == 'add':
             name = args.pop(0)
             number = args.pop(0)
             phonebook_name = args.pop(0)
-            add_entry(name, number, phonebook_name)
+            add_entry(name, number, phonebook_name)     # add_entry function should be defined above
 
         # define similar elif statements for update, lookup,
         # reverse-lookup, and delete commands
@@ -151,26 +124,34 @@ If you're not sure how the `pop` method works, google it!
 
 There are some potential issues with this code. Try to figure out what they are. Try to improve the code.
 
-## Level up your argument parser
+## *3.3 Level up your argument parser
 
-Here are some optional things you could do to make your argument parsing better:
+The argument parser we wrote in section 3.2 wasn't really that great. There's lots of duplicate logic, and it wouldn't be too easy to add or remove a command from our program. Let's try making it better with some more advanced techniques.
 
-#### Unpack the arguments
+#### *3.3.1 Unpack the arguments
 
-Use tuple unpacking to bind variable names to the arguments in one line of code rather than in many lines of code:
+Use tuple unpacking to bind variable names to the arguments in one line of code rather than in many lines of code. For example, we can turn this:
 
     :::python
-    `name, number = args`
+    name = args.pop(0)
+    number = args.pop(0)
 
-#### Error handling
+into this:
+
+    :::python
+    name, number = args
+
+This works even though `args` is a list and not a tuple!
+
+#### *3.3.2 Error handling
 
 What happens when a user passes an incorrect number of arguments? Try giving your program too few arguments. Now try with too many arguments.
 
-It might be useful for your users to `raise` or `print` descriptive error messages if the number of arguments is incorrect. How could you add this to your program?
+Our users might find it useful for us to `raise` or `print` descriptive error messages if the number of arguments is incorrect. How could we add this to our program?
 
 If you don't know how to `raise` exceptions and you want to learn, now is a great time! google it!
 
-#### Mapping commands to functions
+#### *3.3.3 Mapping commands to functions
 
 This section is a bit more advanced than the others. Feel free to skip it!
 
@@ -205,4 +186,12 @@ But we need to figure out how to pass the appropriate arguments to `func`. `func
 This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
 
 
-## Using the `argparse` module
+## *3.4 Using the `argparse` module
+
+If you already know how to manually write an argument parser, try reading this section to learn about the `argparse` module.
+
+# 4. Data Persistence
+
+# 5. Partial String Matching
+
+# 6. Writing Tests
