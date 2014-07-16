@@ -243,10 +243,6 @@ You should see an error message like this:
 
 Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
-## 4.2 Invalid entries
-
-What happens when a user enters an invalid number?
-
 # 5. Writing Tests
 
 # 6. Data Persistence
