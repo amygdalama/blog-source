@@ -174,7 +174,7 @@ If you don't know how to `raise` exceptions and you want to learn, now is a grea
 
 This section is a bit more advanced than the others. Feel free to skip it!
 
-Having an `if`/`elif` statement for each command is kind of ugly. Try creating a dictionary mapping the commands to their corresponding functions, like this:
+Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
 
     :::python
     command_funcs = {
@@ -186,20 +186,23 @@ Having an `if`/`elif` statement for each command is kind of ugly. Try creating a
         'reverse-lookup' : reverse_lookup
     }
 
-Then, you could look up the appropriate function for the given command like this:
+Having functions be values in a dictionary might be pretty foreign to you. But it can be really useful!
+
+We can could look up the appropriate function for the given command like this:
 
     :::python
     func = command_funcs[command]
 
-Here the variable `command` is the main command you grabbed from the command line arguments.
+Here the variable `command` is the main command you grabbed from the command line arguments. `func` is the function associated with `command` in the `command_funcs` dictionary we created.
 
-Having functions be values in a dictionary might be pretty foreign to you. But it can be really useful!
+To execute `func`, we could try:
 
-Now we need to figure out
+    :::python
+    func()
 
- and the variable `args`, which should be a `list` of all the other arguments after the main command.
+But we need to figure out how to pass the appropriate arguments to `func`. `func` could be any of `create`, `add`, `update`, `delete`, etc. These functions take varying number of arguments. So how can we pass the correct number of arguments to `func` without a messy `if` statement?
 
-Not sure how
+This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
 
 
 ## Using the `argparse` module
