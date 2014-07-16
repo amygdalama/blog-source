@@ -186,16 +186,16 @@ Having an `if`/`elif` statement for each command is kind of ugly. Instead, try c
         'reverse-lookup' : reverse_lookup
     }
 
-Having functions be values in a dictionary might be pretty foreign to you. But it can be really useful!
+Having functions as values in a dictionary might be pretty foreign at first, but it can be really useful, as we're about to see!
 
-We can could look up the appropriate function for the given command like this:
+We can look up the appropriate function for the given command like this:
 
     :::python
     func = command_funcs[command]
 
 Here the variable `command` is the main command you grabbed from the command line arguments. `func` is the function associated with `command` in the `command_funcs` dictionary we created.
 
-To execute `func`, we could try:
+To invoke `func`, we could try:
 
     :::python
     func()
