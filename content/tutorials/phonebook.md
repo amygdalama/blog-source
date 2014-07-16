@@ -180,6 +180,8 @@ To make writing tests easier, we can define a custom exception that we'll call `
     :::python
     class ArgumentError(Exception): pass
 
+Subclassing isn't particularly important to understand for this exercise, but is definitely important to understand in other contexts. I won't cover it here.
+
 Now to `raise` this exception when an invalid number of arguments is passed:
 
     :::python
@@ -190,11 +192,24 @@ Now to `raise` this exception when an invalid number of arguments is passed:
         else:
             raise ArgumentError("Not enough arguments!")
 
+Now see what happens when you run:
+
+    :::console
+    $ python phonebook.py create
+
+You should see an error message like this:
+
+    :::pycon
+    Traceback (most recent call last):
+      File "phonebook.py", line 25, in <module>
+        raise ArgumentError("Not enough arguments!")
+    __main__.ArgumentError: Not enough arguments!
+
 Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
 #### *3.3.3 Mapping commands to functions
 
-This section is a bit more advanced than the others. Feel free to skip it!
+This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
 
 Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
 
