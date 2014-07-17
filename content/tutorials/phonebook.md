@@ -243,20 +243,25 @@ You should see an error message like this:
 
 Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
-## 4.2 Invalid arguments
-
-What happens when a user enters an invalid phone number? A user might expect to receive an error if they tried entering:
-
-    :::console
-    $ python phonebook.py add 'Jane Doe' 'cat'
-
-This is the correct *number* of arguments, but the user is attempting to enter the string `'cat'` where the phone number is supposed to go. Maybe we should verify phone numbers before we store them.
+We should also `raise` an exception if the phone number passed as an argument isn't valid, but we'll do that later when we talk about partial string matching.
 
 # 5. Writing Tests
 
 # 6. Data Persistence
 
 # 7. Partial String Matching
+
+## 7.1 `string` Methods
+
+#### 7.1.1 Matching Partial Names
+
+#### 7.1.2 Validating Phone Numbers
+
+## *7.2 Regular Expressions
+
+#### *7.2.1 Matching Partial Names
+
+#### *7.2.2 Validating Phone Numbers
 
 # 8. Further Reading
 
