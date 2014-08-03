@@ -14,15 +14,17 @@ This exercise is organized in a few sections:
 
 Depending on your learning style and experience level, you might get through all of these sections. Or you might just get through the first one. That's okay! The main priority for this exercise is to write a lot of code and understand what the code you're writing does. Don't worry about "finishing", whatever that means.
 
-If you don't understand a phrase or a line of code that I use, try googling it! A huge part of becoming a better programmer is learning how to google things you don't understand. If that doesn't help, ask me! I enjoy explaining things.
+If you don't understand a phrase or a line of code that I use, ask me! I can show you what I'd do to figure out what the line of code means. Learning how to figure out the things you don't know is an important skill in programming.
 
-The more difficult sections are marked with an asterisk and are optional. Also, feel free to skip or skim through the sections that cover content you're already familiar with.
+The more challenging sections are marked with an asterisk (*). If you find the sections without askerisks challenging, I recommend skipping the more challenging ones for now. You can come back to them later if you're curious.
+
+On the other hand, if you have a good idea for how to do the things outlined in a section, try doing it without reading through the section first, and just use the tutorial for reference if you get stuck.
 
 # 1. Specifications
 
-We'll make a [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) application that will support creating, retrieving, updating, and deleting phonebook entries consisting of a name and a phone number.
+We'll write a Python program that will support creating, retrieving, updating, and deleting phonebook entries consisting of a name and a phone number.
 
-The application will have a command line interface supporting the following commands and behaviors:
+The program will have a command line interface supporting the following commands and behaviors:
 
     :::console
     $ python phonebook.py create ex_phonebook
