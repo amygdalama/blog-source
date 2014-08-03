@@ -276,7 +276,16 @@ Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, an
 
 ## 3.4 Handling Bad Arguments
 
-What happens if your program is given arguments that aren't supported? For example, try typing:
+What happens if your program isn't given any arguments? Try:
+
+    :::console
+    $ python phonebook.py
+    Traceback (most recent call last):
+      File "phonebook.py", line 69, in <module>
+        command = args.pop(0)   # the next arg will be the main command
+    IndexError: pop from empty list
+
+What if it's given an argument that isn't supported?
 
     :::console
     $ python phonebook.py cats
@@ -285,71 +294,93 @@ What about if you try `add`ing a phone number, but you only give it a name, and 
 
     :::console
     $ python phonebook.py add 'Jane Doe'
+    Traceback (most recent call last):
+      File "phonebook.py", line 79, in <module>
+        name, number, phonebook_name = args
+    ValueError: need more than 1 value to unpack
 
 What about if you give it a name, number, and an extra nonsensical argument?
 
     :::console
     $ python phonebook.py add 'Jane Doe' '765-344-3421' 'cats'
 
-It would be helpful to print out an error message for situations like this.
+It would be helpful to print out a more descriptive error message for these cases, rather than having Python print out a confusing message (or nothing at all).
 
-[Back to top](#top)
-
-## *3.5 Mapping commands to functions
-
-This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
-
-Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
+For a start, we can add `print` statements and then `quit` when our program is given bad arguments:
 
     :::python
-    command_funcs = {
-        'create' : create,  # create is a function defined elsewhere
-        'add' : add,
-        'update' : update,
-        'delete' : delete,
-        'lookup' : lookup,
-        'reverse-lookup' : reverse_lookup
-    }
+    if __name__ == '__main__':
+        args = sys.argv[:]
+        script = args.pop(0)    # name of script is first arg
+        if not args:
+            print "Not enough arguments"
+            quit()
+        command = args.pop(0)   # the next arg will be the main command
 
-Having functions as values in a dictionary might be pretty foreign at first, but it can be really useful, as we're about to see!
+Here, we take advantage of an empty list being `False`y. If there are no arguments left in `args` after we `pop` off the script name, `not args` will evaluate to `True`, and we'll `print` an error message and `quit`. Otherwise we can move on with our program.
 
-We can look up the appropriate function for the given command like this:
-
-    :::python
-    func = command_funcs[command]
-
-Here the variable `command` is the main command you grabbed from the command line arguments. `func` is the function associated with `command` in the `command_funcs` dictionary we created.
-
-To invoke `func`, we could try:
-
-    :::python
-    func()
-
-But we need to figure out how to pass the appropriate arguments to `func`. `func` could be any of `create`, `add`, `update`, `delete`, etc. These functions take varying number of arguments. So how can we pass the correct number of arguments to `func` without a messy `if` statement?
-
-This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
-
-[Back to top](#top)
-
-# 4. Raising Exceptions
-
-What happens when a user passes an incorrect number of arguments? Try giving your program too few arguments. Now try with too many arguments.
-
-Our users might find it useful for us to `print` descriptive error messages if the number of arguments is incorrect. How could we add this to our progam?
-
-## 4.1 Invalid number of arguments
-
-We could do something like this:
+Similarly, we can add a check that we're given the correct number of arguments for the `create` command:
 
     :::python
     if command == 'create':
-        if args:
-            phonebook_name = args.pop(0)
-            create_phonebook(phonebook_name)
-        else:
-            print "Not enough arguments!"
+        if len(args) != 1:
+            print "Phonebook name required"
+            quit()
+        phonebook_name = args.pop(0)
+        create_phonebook(phonebook_name)
 
-Using `print` statements to indicate that an invalid number of arguments were passed is sufficient for now, but will make writing tests difficult.
+Add similar checks for each of the commands. Make your program `print` error messages and `quit` any time:
+
+* there aren't enough arguments
+* there are too many arguments
+* an argument given is invalid
+
+Doing checks based on the `len` of `args` is considered bad Python style. It's usually better to put code in `try`/`except` clauses. Similarly, when we write tests, we're going to want to `raise` exceptions rather than just `print`ing and `quit`ing. But for now, this will do.
+
+Your program should now support the following:
+
+    :::console
+    $ python phonebook.py
+    Command required
+    $ python phonebook.py cats
+    Invalid command
+    $ python phonebook.py add
+    Name, number, and phonebook name required
+    $ python phonebook.py add 'Jane Doe'
+    Name, number, and phonebook name required
+    $ python phonebook.py add 'Jane Doe' '234-234-2334'
+    Name, number, and phonebook name required
+    $ python phonebook.py add 'Jane Doe' '234-234-2334' 'ex_phonebook'
+    $ python phonebook.py add 'Jane Doe' '234-234-2334' 'ex_phonebook' 'cats'
+    Name, number, and phonebook name required
+
+Similarly, try giving the other commands (`update`, `remove`, `lookup`, and `reverse-lookup`) too few and too many arguments. You want to make sure that the behavior that you expect is what actually happens.
+
+[Back to top](#top)
+
+# 4. Data Storage
+
+Now that we have a skeleton of functions for each of our commands, and we call the appropriate functions for each command with the appropriate arguments, we need to figure out how to store our phonebook entries. First we'll start with saving these entries to a file, and reading them into a dictionary data structure. A more advanced option would be to save the data in a database.
+
+## 4.1 Creating a Phonebook
+
+## 4.2 Adding an Entry
+
+## 4.3 Updating an Entry
+
+## 4.4 Removing an Entry
+
+## 4.5 Looking up an Entry by Name
+
+## 4.6 Looking up an Entry by Phone Number
+
+# 5. Writing Tests
+
+## 5.1 A Basic Test
+
+## 5.2 A `tests.py` Script
+
+## 5.3 Raising Exceptions
 
 For example, let's say we wanted to test that running our program with the command
 
@@ -396,15 +427,7 @@ We should also `raise` an exception if the phone number passed as an argument is
 
 [Back to top](#top)
 
-# 5. Writing Tests
-
-## 5.1 A Basic Test
-
-## 5.2 A `tests.py` Script
-
-## *5.3 Testing with the `unittest` Module
-
-# 6. Data Storage
+## *5.4 Testing with the `unittest` Module
 
 # 7. Partial String Matching
 
@@ -424,8 +447,42 @@ We should also `raise` an exception if the phone number passed as an argument is
 
 # Appendix
 
-## Subclasses (possible)
-
 ## Further Reading
 
-* The `argparse` module
+### The `argparse` module
+
+### Mapping commands to functions
+
+This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
+
+Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
+
+    :::python
+    command_funcs = {
+        'create' : create,  # create is a function defined elsewhere
+        'add' : add,
+        'update' : update,
+        'delete' : delete,
+        'lookup' : lookup,
+        'reverse-lookup' : reverse_lookup
+    }
+
+Having functions as values in a dictionary might be pretty foreign at first, but it can be really useful, as we're about to see!
+
+We can look up the appropriate function for the given command like this:
+
+    :::python
+    func = command_funcs[command]
+
+Here the variable `command` is the main command you grabbed from the command line arguments. `func` is the function associated with `command` in the `command_funcs` dictionary we created.
+
+To invoke `func`, we could try:
+
+    :::python
+    func()
+
+But we need to figure out how to pass the appropriate arguments to `func`. `func` could be any of `create`, `add`, `update`, `delete`, etc. These functions take varying number of arguments. So how can we pass the correct number of arguments to `func` without a messy `if` statement?
+
+This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
+
+[Back to top](#top)
