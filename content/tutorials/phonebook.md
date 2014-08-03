@@ -120,7 +120,7 @@ And execute `b.py`:
     $ python b.py
     __name__:  a
 
-`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. I'll give a basic overview of what `import` does in the next section.
+`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. I'll give a basic overview of what `import` does in a later section.
 
 So the value of `__name__` inside `a` in this context is the string `'a'`, rather than `'__main__'`. This is because the code is being executed by result of an `import` statement, rather than being executed directly.
 
@@ -178,7 +178,9 @@ So `sys.argv` is a list, containing the name of the script (`'ex.py'`), and then
 
 ## 3.2 Parsing Arguments
 
-For your phonebook application, you might choose to manually parse your arguments. For the first two commands, `create` and `add`, your code would look something like this:
+For your phonebook application, you might choose to manually parse your arguments. This code should go in an `if __name__ == '__main__'` code block because parsing arguments doesn't make sense when you're `import`ing a module.
+
+For the first two commands, `create` and `add`, your code would look something like this:
 
     :::python
     def create_phonebook(phonebook_name):
@@ -191,11 +193,11 @@ For your phonebook application, you might choose to manually parse your argument
         pass
 
 
-    # include functions for other arguments
+    # include functions for other commands
 
 
     if __name__ == '__main__':
-        args = sys.argv
+        args = sys.argv[:]      # make a copy
         script = args.pop(0)    # name of script is first arg
         command = args.pop(0)   # the next arg will be the main command
 
@@ -209,12 +211,13 @@ For your phonebook application, you might choose to manually parse your argument
             phonebook_name = args.pop(0)
             add_entry(name, number, phonebook_name)
 
-
 Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, and `delete`.
 
-If you're not sure how the `pop` method works, google it!
+If you're not sure how the `pop` method works, google it, and play around with it in your REPL! Some questions you can try to figure out:
 
-There are some potential issues with this code. Try to figure out what they are. Try to improve the code.
+1. What happens if you don't give `pop` an argument?
+2. What happens to `sys.argv` if we `pop` elements off `args`?
+3. What happens to `sys.argv` if we set `args` equal to `sys.argv` rather than `sys.argv[:]`?
 
 [Back to top](#top)
 
@@ -254,7 +257,7 @@ An example for the `add` and `create` commands would look like this:
 
 
     if __name__ == '__main__':
-        args = sys.argv
+        args = sys.argv[:]      # make a copy
         script = args.pop(0)    # name of script is first arg
         command = args.pop(0)   # the next arg will be the main command
 
@@ -395,6 +398,12 @@ We should also `raise` an exception if the phone number passed as an argument is
 [Back to top](#top)
 
 # 5. Writing Tests
+
+## 5.1 A Basic Test
+
+## 5.2 A `tests.py` Script
+
+## *5.3 Testing with the `unittest` Module
 
 # 6. Data Storage
 
