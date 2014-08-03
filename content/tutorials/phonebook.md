@@ -4,6 +4,7 @@ Author: Amy Hanlon
 Slug: phonebook
 Status: hidden
 
+<a name="top"></a>
 Let's make a command line tool for managing phonebook entries!
 
 # Introduction
@@ -59,6 +60,7 @@ The program will have a command line interface supporting the following commands
     $ python phonebook.py remove 'John Doe' ex_phonebook
     Error: 'John Doe' does not exist in ex_phonebook.pb
 
+[Back to top](#top)
 
 # 2. Code Skeleton
 
@@ -81,6 +83,8 @@ Here is an example skeleton program with function definitions for `create`ing a 
         pass
 
 Similarly, create functions for `update`, `lookup`, `reverse-lookup`, and `delete`.
+
+[Back to top](#top)
 
 ## 2.1 The `__name__` Variable
 
@@ -146,6 +150,8 @@ And let's execute each of these scripts to see what happens:
 
 Viola! So that's what the `if __name__ == '__main__'` statement does. We'll be adding some code that we don't want to execute when we `import phonebook` into this code block.
 
+[Back to top](#top)
+
 # 3. Argument parsing
 
 ## 3.1 Accessing Arguments
@@ -167,6 +173,8 @@ What happens when you execute the script giving it some arguments?
     ['ex.py', 'cats', 'dragons', 'frogs']
 
 So `sys.argv` is a list, containing the name of the script (`'ex.py'`), and then the three arguments we passed, all represented as strings.
+
+[Back to top](#top)
 
 ## 3.2 Parsing Arguments
 
@@ -207,6 +215,8 @@ Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, an
 If you're not sure how the `pop` method works, google it!
 
 There are some potential issues with this code. Try to figure out what they are. Try to improve the code.
+
+[Back to top](#top)
 
 ## 3.3 Unpacking Arguments
 
@@ -260,7 +270,7 @@ We left the `pop` line for the `create` command since there should be only one a
 
 Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, and `delete`.
 
-
+[Back to top](#top)
 
 ## 3.4 Handling Bad Arguments
 
@@ -280,6 +290,8 @@ What about if you give it a name, number, and an extra nonsensical argument?
     $ python phonebook.py add 'Jane Doe' '765-344-3421' 'cats'
 
 It would be helpful to print out an error message for situations like this.
+
+[Back to top](#top)
 
 ## *3.5 Mapping commands to functions
 
@@ -314,6 +326,8 @@ To invoke `func`, we could try:
 But we need to figure out how to pass the appropriate arguments to `func`. `func` could be any of `create`, `add`, `update`, `delete`, etc. These functions take varying number of arguments. So how can we pass the correct number of arguments to `func` without a messy `if` statement?
 
 This is where the super awesome `*args` comes in handy. Try reading up on `*args`. Then try figuring out how to use it to pass `func` the rest of the arguments that were given on the command line. Try to figure out how to handle when an incorrect number of arguments is passed.
+
+[Back to top](#top)
 
 # 4. Raising Exceptions
 
@@ -377,6 +391,8 @@ You should see an error message like this:
 Try `raise`ing our `ArgumentError` exception any time a user enters too few or too many arguments.
 
 We should also `raise` an exception if the phone number passed as an argument isn't valid, but we'll do that later when we talk about partial string matching.
+
+[Back to top](#top)
 
 # 5. Writing Tests
 
