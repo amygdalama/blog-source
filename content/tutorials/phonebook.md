@@ -216,8 +216,7 @@ Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, an
 If you're not sure how the `pop` method works, google it, and play around with it in your REPL! Some questions you can try to figure out:
 
 1. What happens if you don't give `pop` an argument?
-2. What happens to `sys.argv` if we `pop` elements off `args`?
-3. What happens to `sys.argv` if we set `args` equal to `sys.argv` rather than `sys.argv[:]`?
+2. What does the comment "make a copy" mean?
 
 [Back to top](#top)
 
