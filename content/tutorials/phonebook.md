@@ -58,7 +58,7 @@ The application will have a command line interface supporting the following comm
     Error: 'John Doe' does not exist in ex_phonebook.pb
 
 
-# 2. Planning & Organizing
+# 2. Code Skeleton
 
 What are the functions that you'll need for your program? What arguments will each of those functions need? Write a skeleton program that has those functions definitions, but where the functions just `pass`, rather than actually doing anything.
 
@@ -318,7 +318,7 @@ We should also `raise` an exception if the phone number passed as an argument is
 
 # 5. Writing Tests
 
-# 6. Data Persistence
+# 6. Data Storage
 
 # 7. Partial String Matching
 
