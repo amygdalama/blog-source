@@ -6,17 +6,17 @@ Status: hidden
 
 Let's make a command line tool for managing phonebook entries!
 
-# Prologue
+# Introduction
 
-Depending on your learning style and experience level, you might get through all of these chapters. Or you might just get through the first one. That's okay! The main priority for this exercise is to write a lot of code and understand what the code you're writing does. Don't worry about "finishing", whatever that means.
+This exercise is organized in a few sections:
+
+[TOC]
+
+Depending on your learning style and experience level, you might get through all of these sections. Or you might just get through the first one. That's okay! The main priority for this exercise is to write a lot of code and understand what the code you're writing does. Don't worry about "finishing", whatever that means.
 
 If you don't understand a phrase or a line of code that I use, try googling it! A huge part of becoming a better programmer is learning how to google things you don't understand. If that doesn't help, ask me! I enjoy explaining things.
 
-Most of the chapters are split up into sections roughly ordered by difficulty level. The more difficult sections are marked as optional. Also, feel free to skip or skim through the sections that cover content you're already familiar with.
-
-# Table of Contents
-
-[TOC]
+The more difficult sections are marked with an asterisk and are optional. Also, feel free to skip or skim through the sections that cover content you're already familiar with.
 
 # 1. Specifications
 
@@ -66,12 +66,19 @@ Here is an example skeleton program with a function definition for `create`ing a
 
     :::python
     def create_phonebook(phonebook_name):
-        # placeholder for create_phonebook function
+        # create a new phonebook
+        pass
+
+
+    def add_entry(name, number, phonebook_name):
+        # add a new name and number to the given phonebook
         pass
 
 
     if __name__ == '__main__':
         pass
+
+Similarly, create functions for `update`, `lookup`, `reverse-lookup`, and `delete`.
 
 If you don't know why I included an `if __name__ == '__main__'` statement, try googling it! Now is an excellent time to find out.
 
@@ -79,7 +86,7 @@ If you don't know why I included an `if __name__ == '__main__'` statement, try g
 
 If you don't know how to parse arguments passed to the Python interpreter from the command line, see if you can figure out how to do it by googling. Maybe google "python command line arguments" as a start.
 
-## 3.1 Accessing command line arguments
+## 3.1 Accessing Arguments
 
 Arguments passed to Python scripts from the command line are accessible using the `sys` module. Here's a simple example script that prints out the arguments passed to the Python interpreter:
 
@@ -99,13 +106,23 @@ What happens when you execute the script giving it some arguments?
 
 So `sys.argv` is a list, containing the name of the script (`'ex.py'`), and then the three arguments we passed, all represented as strings.
 
-## 3.2 Rolling your own argument parser
+## 3.2 Parsing Arguments
 
-For your phonebook application, you might choose to manually parse your arguments, which could look something like this:
+For your phonebook application, you might choose to manually parse your arguments. For the first two commands, `create` and `add`, your code would look something like this:
 
     :::python
-    # skeleton code from ch2 defining your functions
-    # like create_phonebook and add_entry
+    def create_phonebook(phonebook_name):
+        # create a new phonebook
+        pass
+
+
+    def add_entry(name, number, phonebook_name):
+        # add a new name and number to the given phonebook
+        pass
+
+
+    # include functions for other arguments
+
 
     if __name__ == '__main__':
         args = sys.argv
@@ -114,28 +131,26 @@ For your phonebook application, you might choose to manually parse your argument
 
         if command == 'create':
             phonebook_name = args.pop(0)
-            create_phonebook(phonebook_name)    # create_phonebook function should be defined above
+            create_phonebook(phonebook_name)
 
         elif command == 'add':
             name = args.pop(0)
             number = args.pop(0)
             phonebook_name = args.pop(0)
-            add_entry(name, number, phonebook_name)     # add_entry function should be defined above
+            add_entry(name, number, phonebook_name)
 
-        # define similar elif statements for update, lookup,
-        # reverse-lookup, and delete commands
+
+Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, and `delete`.
 
 If you're not sure how the `pop` method works, google it!
 
 There are some potential issues with this code. Try to figure out what they are. Try to improve the code.
 
-## *3.3 Level up your argument parser
+## 3.3 Unpacking Arguments
 
-The argument parser we wrote in section 3.2 wasn't really that great. There's lots of duplicate logic, and it wouldn't be too easy to add or remove a command from our program. Let's try making it better with some more advanced techniques.
+List unpacking can make our code naming the variables in each of the `if`/`elif` blocks much cleaner.
 
-#### *3.3.1 Unpack the arguments
-
-Use tuple unpacking to bind variable names to the arguments in one line of code rather than in many lines of code. For example, we can turn this:
+For example, we can turn this:
 
     :::python
     name = args.pop(0)
@@ -146,9 +161,65 @@ into this:
     :::python
     name, number = args
 
-This works even though `args` is a list and not a tuple!
+This takes the first element in `args` and assigns it to the variable `name`, and the second element in `args` and assigns it to the variable `number`.
 
-#### *3.3.2 Mapping commands to functions
+Edit the code for each of your commands to use list unpacking everywhere you have multiple lines with `pop` in a row.
+
+An example for the `add` and `create` commands would look like this:
+
+    :::python
+    def create_phonebook(phonebook_name):
+        # create a new phonebook
+        pass
+
+
+    def add_entry(name, number, phonebook_name):
+        # add a new name and number to the given phonebook
+        pass
+
+
+    # include functions for other arguments
+
+
+    if __name__ == '__main__':
+        args = sys.argv
+        script = args.pop(0)    # name of script is first arg
+        command = args.pop(0)   # the next arg will be the main command
+
+        if command == 'create':
+            phonebook_name = args.pop(0)
+            create_phonebook(phonebook_name)
+
+        elif command == 'add':
+            name, number, phonebook_name = args
+            add_entry(name, number, phonebook_name)
+
+We left the `pop` line for the `create` command since there should be only one argument left. What happens if you try to unpack a list with only one element? Try figuring it out in your REPL.
+
+Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, and `delete`.
+
+
+
+## 3.4 Handling Bad Arguments
+
+What happens if your program is given arguments that aren't supported? For example, try typing:
+
+    :::console
+    $ python phonebook.py cats
+
+What about if you try `add`ing a phone number, but you only give it a name, and not a number?
+
+    :::console
+    $ python phonebook.py add 'Jane Doe'
+
+What about if you give it a name, number, and an extra nonsensical argument?
+
+    :::console
+    $ python phonebook.py add 'Jane Doe' '765-344-3421' 'cats'
+
+It would be helpful to print out an error message for situations like this.
+
+## *3.5 Mapping commands to functions
 
 This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
 
