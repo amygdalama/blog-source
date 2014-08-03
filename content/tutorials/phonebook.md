@@ -90,19 +90,14 @@ Suppose someone (maybe you) wanted to `import` this `phonebook.py` script into a
 
 This is exactly what the `if __name__ == '__main__'` code block is for. `__name__` is a variable whose value will be `__main__` if the script was executed directly (e.g. by `python phonebook.py`) and otherwise will be the name of the module, (e.g. `phonebook`).
 
-To make this a bit more concrete, let's make a couple example scripts:
+To make this a bit more concrete, let's make some example scripts:
 
-`a.py`:
+First `a.py`:
 
     :::python
     print "__name__: ", __name__
 
-`b.py`:
-
-    :::python
-    import a
-
-Now let's execute each of these scripts and see what happens.
+What happens when we execute `a.py`?
 
     :::console
     $ python a.py
@@ -110,13 +105,18 @@ Now let's execute each of these scripts and see what happens.
 
 `a.py` is fairly straightforward -- we execute the `print` statement, and we see that the value of the variable `__name__` is the string `'__main__'`. `__name__` is a variable that is defined for us automatically in every Python program, and if the program was executed directly, its value is the string `'__main__'`. Great.
 
-Now let's execute `b.py`:
+Let's define a second script, `b.py`:
+
+    :::python
+    import a
+
+And execute `b.py`:
 
     :::console
     $ python b.py
     __name__:  a
 
-`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. This also adds the variables defined in `a` to our namespace. I'll give a basic overview of what `import` does in the next section.
+`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. I'll give a basic overview of what `import` does in the next section.
 
 So the value of `__name__` inside `a` in this context is the string `'a'`, rather than `'__main__'`. This is because the code is being executed by result of an `import` statement, rather than being executed directly.
 
@@ -147,8 +147,6 @@ And let's execute each of these scripts to see what happens:
 Viola! So that's what the `if __name__ == '__main__'` statement does. We'll be adding some code that we don't want to execute when we `import phonebook` into this code block.
 
 # 3. Argument parsing
-
-If you don't know how to parse arguments passed to the Python interpreter from the command line, see if you can figure out how to do it by googling. Maybe google "python command line arguments" as a start.
 
 ## 3.1 Accessing Arguments
 
