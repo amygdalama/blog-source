@@ -64,7 +64,7 @@ The program will have a command line interface supporting the following commands
 
 What are the functions that you'll need for your program? What arguments will each of those functions need? Write a skeleton program that has those functions definitions, but where the functions just `pass`, rather than actually doing anything.
 
-Here is an example skeleton program with a function definition for `create`ing a phonebook. You'll need more functions, too, but this is a start:
+Here is an example skeleton program with function definitions for `create`ing a phonebook and `add`ing an entry to the phonebook. You'll need more functions, too, but this is a start:
 
     :::python
     def create_phonebook(phonebook_name):
@@ -82,7 +82,69 @@ Here is an example skeleton program with a function definition for `create`ing a
 
 Similarly, create functions for `update`, `lookup`, `reverse-lookup`, and `delete`.
 
-If you don't know why I included an `if __name__ == '__main__'` statement, try googling it! Now is an excellent time to find out.
+## 2.1 The `__name__` Variable
+
+Why do I have `if __name__ == '__main__':` in the above code snippet?
+
+Suppose someone (maybe you) wanted to `import` this `phonebook.py` script into another program. Maybe you want to do this so you could write tests for the program (which we'll cover later), or because you wanted to make a web front-end to the program. You would probably want some code that executes only if the script is executed directly (e.g. by calling `python phonebook.py` on the command line) that is *not* executed when you `import` the script into another Python program.
+
+This is exactly what the `if __name__ == '__main__'` code block is for. `__name__` is a variable whose value will be `__main__` if the script was executed directly (e.g. by `python phonebook.py`) and otherwise will be the name of the module, (e.g. `phonebook`).
+
+To make this a bit more concrete, let's make a couple example scripts:
+
+`a.py`:
+
+    :::python
+    print "__name__: ", __name__
+
+`b.py`:
+
+    :::python
+    import a
+
+Now let's execute each of these scripts and see what happens.
+
+    :::console
+    $ python a.py
+    __name__:  __main__
+
+`a.py` is fairly straightforward -- we execute the `print` statement, and we see that the value of the variable `__name__` is the string `'__main__'`. `__name__` is a variable that is defined for us automatically in every Python program, and if the program was executed directly, its value is the string `'__main__'`. Great.
+
+Now let's execute `b.py`:
+
+    :::console
+    $ python b.py
+    __name__:  a
+
+`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. This also adds the variables defined in `a` to our namespace. I'll give a basic overview of what `import` does in the next section.
+
+So the value of `__name__` inside `a` in this context is the string `'a'`, rather than `'__main__'`. This is because the code is being executed by result of an `import` statement, rather than being executed directly.
+
+How could we execute different code when we `import` a script than when we execute the script directly? This is where the `if __name__ == '__main__'` part comes into play. Let's make two more example scripts to explore this.
+
+`c.py`:
+
+    :::python
+    if __name__ == '__main__':
+        print "c.py was executed directly"
+    else:
+        print "c.py was imported"
+
+`d.py`:
+
+    :::python
+    import c
+
+And let's execute each of these scripts to see what happens:
+
+    :::console
+    $ python c.py
+    c.py was executed directly
+
+    $ python d.py
+    c.py was imported
+
+Viola! So that's what the `if __name__ == '__main__'` statement does. We'll be adding some code that we don't want to execute when we `import phonebook` into this code block.
 
 # 3. Argument parsing
 
