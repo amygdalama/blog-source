@@ -360,19 +360,215 @@ Similarly, try giving the other commands (`update`, `remove`, `lookup`, and `rev
 
 # 4. Data Storage
 
-Now that we have a skeleton of functions for each of our commands, and we call the appropriate functions for each command with the appropriate arguments, we need to figure out how to store our phonebook entries. First we'll start with saving these entries to a file, and reading them into a dictionary data structure. A more advanced option would be to save the data in a database.
+Now that we have a skeleton of functions for each of our commands, and we call the appropriate functions for each command with the appropriate arguments, we need to figure out how to store and access our phonebook entries. First we'll start with saving these entries to a file, and reading them into a dictionary data structure. A more advanced option would be to save the data in a database.
 
 ## 4.1 Creating a Phonebook
 
+Let's work on the `create_phonebook` function. This function should create a new text file in the working directory.
+
+We can create a file by `open`ing a file in write mode:
+
+    :::python
+    f = open('filename.txt', 'w')
+
+The `'w'` parameter designates write mode. There is also read mode and append mode, both of which we'll use later.
+
+Any time you `open` a file you must remember to `close` it, or your changes won't be saved!
+
+    :::python
+    f = open('filename.txt', 'w')
+    f.close()
+
+Since it's easy to forget to `close` a file, it's best practice to instead `open` files using the `with` statement:
+
+    :::python
+    with open('filename.txt', 'w') as f:
+        # do things with f
+        pass
+
+`with` automatically `close`s the file for you, so you don't have to remember.
+
+Let's use this to fill out our `create_phonebook` function, which should execute with the `create` command:
+
+    :::python
+    def create_phonebook(phonebook_name):
+        with open('%s.txt' % phonebook_name, 'w') as f:
+            pass
+
+The syntax `'%s.txt' % phonebook_name` is called string interpolation. The variable on the right side of the `%` gets substituted for the `%s` inside the string. This will create files with names like `phonebook.txt` or `ex_phonebook.txt`.
+
+We just `pass` because we don't need to write anything to the file at this point.
+
+Now let's see what happens when we use our program to `create` a phonebook:
+
+    :::console
+    $ python phonebook.py create 'ex_phonebook'
+    $ ls
+    ex_phonebook.txt phonebook.py
+
+We should see that a file `ex_phonebook.txt` was created!
+
+Let's say we manually added some entries into our `ex_phonebook.txt` file, and tried creating another phonebook with the same name? Would our data get overwritten? Or would Python throw an error? Let's see!
+
+I'm manually typing some text into `ex_phonebook.txt` using my text editor:
+
+    :::text
+    Jane Doe    123-123-1234
+
+Now let's try `create`ing `ex_phonebook` again:
+
+    :::console
+    $ python phonebook.py create 'ex_phonebook'
+
+And... oh no! The contents of `ex_phonebook.txt` have been deleted! We don't want our users to accidentally delete the entire contents of their phonebooks this way. Let's rewrite the `create_phonebook` function so that it won't overwrite any existing files.
+
+To check if the file exists, we'll need to use the `os` module. Add this import statement to the top of your `phonebook.py` script:
+
+    :::python
+    import os
+
+And then edit the `create_phonebook` function:
+
+    :::python
+    def create_phonebook(phonebook_name):
+        filename = '%s.txt' % phonebook_name
+        if os.path.exists(filename):
+            print "That phonebook already exists!"
+            quit()
+        with open(filename, 'w') as f:
+            pass
+
+Now let's check that this works:
+
+    :::console
+    $ python phonebook.py create 'ex_phonebook'
+    That phonebook already exists!
+
+Sweet!
+
 ## 4.2 Adding an Entry
 
-## 4.3 Updating an Entry
+Now that we can `create` phonebooks, let's work on the `add_entry` function.
 
-## 4.4 Removing an Entry
+Recall that we should support adding an entry with the following command:
 
-## 4.5 Looking up an Entry by Name
+    :::console
+    $ python phonebook.py add 'Jane Doe' '234-234-2334' 'ex_phonebook'
 
-## 4.6 Looking up an Entry by Phone Number
+For now, adding an entry will mean adding a line to the phonebook.
+
+To add a line to a file, we'll need to `open` the file in append mode:
+
+    :::python
+    def add_entry(name, number, phonebook_name):
+        with open(filename, 'a') as f:
+            f.write('%s\t%s' % (name, number))
+            f.write('\n')   # add newline
+
+`'%s\t%s' % (name, number)` is another example of string interpolation. This will substitute the first item in the tuple after the `%` for the first `%s` and the second item in the tuple for the second `%s`. The `\t` in the middle is the symbol for a tab. So our entries will be stored in a tab-delimited format.
+
+Let's try adding a couple entries:
+
+    :::console
+    $ python phonebook.py add 'Jane Doe' '234-234-2334' 'ex_phonebook'
+    $ python phonebook.py add 'John Doe' '789-234-4567' 'ex_phonebook'
+
+Now the `ex_phonebook.txt` file should look like:
+
+    :::text
+    Jane Doe    234-234-2334
+    John Doe    789-234-4567
+
+There are plenty of things we should do to make this `add_entry` function better, like
+
+* check for duplicate entries
+* make sure the given phonebook name exists
+
+But for now let's move on. We can come back to these if we want.
+
+## 4.3 Looking up an Entry by Name
+
+Now, let's work on the `lookup_name` function. We want to read the contents of a phonebook file, and print out the matching entries, if there are any. There are so many ways to do this!
+
+We'll need to `open` a file in read mode, and then iterate through each line of the file. We can do that with:
+
+    :::python
+    def lookup_name(name, phonebook_name):
+        filename = '%s.txt' % phonebook_name
+        with open(filename, 'r') as f:      # 'r' for read mode
+            for line in f:
+                print line
+
+We'll first just try `print`ing the `line` to see what it looks like:
+
+    :::console
+    $ python phonebook.py lookup 'Jane Doe' 'ex_phonebook'
+    Jane Doe    234-234-2334
+
+    John Doe    789-234-4567
+
+Hmm. This doesn't give us much information. We can use the function `repr` to tell us the actual representation of the lines:
+
+    :::python
+    def lookup_name(name, phonebook_name):
+        filename = '%s.txt' % phonebook_name
+        with open(filename, 'r') as f:
+            for line in f:
+                print repr(line)            # use repr function
+
+After replacing this in our `phonebook.py` file, let's see what the `lookup_name` function prints:
+
+    :::console
+    $ python phonebook.py lookup 'Jane Doe' 'ex_phonebook'
+    'Jane Doe\t234-234-2334\n'
+    'John Doe\t789-234-4567\n'
+
+Okay! That is more illuminating. So for each line, we have a string containing the name, followed by a tab (`\t`), followed by the number, followed by a newline (`\n`).
+
+We need to somehow extract the names from each of these lines so we can compare it to the name we're looking up.
+
+Python has some helpful string methods that we can use here. `rstrip` removes trailing whitespace from a string (`\n` counts as whitespace), and `split` breaks up a string into a list based on the characters of your choosing.
+
+So, for each of these lines, let's `strip` off the whitespace, and `split` the string into a list on the `\t` character:
+
+    :::python
+    def lookup_name(name, phonebook_name):
+        filename = '%s.txt' % phonebook_name
+        with open(filename, 'r') as f:
+            for line in f:
+                print line.strip().split('\t')      # use string methods
+
+This will `print` the results:
+
+    :::console
+    $ python phonebook.py lookup 'Jane Doe' 'ex_phonebook'
+    ['Jane Doe', '234-234-2334']
+    ['John Doe', '789-234-4567']
+
+Great! Now we need to see if the name of the entry is the same as the name we're looking up, and only `print` the names that match:
+
+    :::python
+    def lookup_name(name, phonebook_name):
+        filename = '%s.txt' % phonebook_name
+        with open(filename, 'r') as f:
+            for line in f:
+                entry_name, entry_number = line.strip().split('\t')
+                if entry_name == name:
+                    print entry_name, entry_number
+
+Now when we run our program:
+
+    :::console
+    $ python phonebook.py lookup 'Jane Doe' 'ex_phonebook'
+    Jane Doe 234-234-2334
+
+Great! Now it only prints matches. When we write tests for this function, we'll want to `return` the matches, rather than just `print`ing them, but for now this will do.
+
+## 4.4 Other Functionality
+
+Now we can create phonebooks, add entries, and look up existing entries by name. How could we remove a name? Update a name? Look up a name by phone number? Try writing these functions on your own.
+
+I'll give you a hint: deleting a line from a file isn't very straightforward. Instead, you'll need to save the lines you want to keep in a list, remove the old contents of the file by opening it in write mode, and then write the lines you saved in the list to the file.
 
 # 5. Writing Tests
 
@@ -429,25 +625,10 @@ We should also `raise` an exception if the phone number passed as an argument is
 
 ## *5.4 Testing with the `unittest` Module
 
-# 7. Partial String Matching
+# Further Reading
 
-## 7.1 `string` Methods
-
-#### 7.1.1 Matching Partial Names
-
-#### 7.1.2 Validating Phone Numbers
-
-## *7.2 Regular Expressions
-
-#### *7.2.1 Matching Partial Names
-
-#### *7.2.2 Validating Phone Numbers
-
-# 8. Further Reading
-
-# Appendix
-
-## Further Reading
+* Partial String Matching
+* Regular Expressions
 
 ### The `argparse` module
 
