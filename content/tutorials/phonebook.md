@@ -23,6 +23,8 @@ On the other hand, if you have a good idea for how to do the things outlined in 
 
 At the end of some sections I have links to additional resources if you'd like to implement a more advanced command line tool.
 
+If you'd like to see what my code looks like when I worked through this exercise, I have snapshots of my `phonebook.py` file for each section [on GitHub](https://github.com/amygdalama/phonebook-tutorial).
+
 # 1. Specifications
 
 We'll write a Python program that will support creating, retrieving, updating, and deleting phonebook entries consisting of a name and a phone number.
@@ -154,7 +156,7 @@ Similarly, define `elif` statements for `update`, `lookup`, `reverse-lookup`, an
 If you're not sure how the `pop` method works, google it, and play around with it in your REPL! Some questions you can try to figure out:
 
 1. What happens if you don't give `pop` an argument?
-2. What does the comment "make a copy" mean?
+2. What does the comment "make a copy" mean? What happens if you don't make a copy?
 
 [Back to top](#top)
 
@@ -303,6 +305,7 @@ If this section hasn't challenged you enough, here are some things you could wor
 * Parse the commands using a module like `argparse`
 * `raise` exceptions instead of `print`ing error messages when the user gives bad input
 * Even better, `raise` exceptions *and* `print` human-readable, helpful error messages when the user gives bad input
+* [Map the commands to functions using a dictionary!](#map)
 * Practice test-driven development! Try writing a test for what should happen for a possible input (good or bad), run the test and watch it fail, and then work on your code until the test passes. Then repeat.
 
 [Back to top](#top)
@@ -602,7 +605,7 @@ We should also `raise` an exception if the phone number passed as an argument is
 <a name="__name__"></a>
 ## The `__name__` Variable
 
-Why do I have `if __name__ == '__main__':` in the above code snippet?
+What does `if __name__ == '__main__':` do, and why do I have it in my program?
 
 Suppose someone (maybe you) wanted to `import` this `phonebook.py` script into another program. Maybe you want to do this so you could write tests for the program (which we'll cover later), or because you wanted to make a web front-end to the program. You would probably want some code that executes only if the script is executed directly (e.g. by calling `python phonebook.py` on the command line) that is *not* executed when you `import` the script into another Python program.
 
@@ -666,6 +669,7 @@ Viola! So that's what the `if __name__ == '__main__'` statement does. We'll be a
 
 [Back to top](#top)
 
+<a name="map"></a>
 ## Mapping commands to functions
 
 Having an `if`/`elif` statement for each of our commands is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
