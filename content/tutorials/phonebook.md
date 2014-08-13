@@ -21,6 +21,8 @@ The more challenging sections are marked with an asterisk (*). If you find the s
 
 On the other hand, if you have a good idea for how to do the things outlined in a section, try doing it without reading through the section first, and just use the tutorial for reference if you get stuck.
 
+At the end of some sections I have links to additional resources if you'd like to implement a more advanced command line tool.
+
 # 1. Specifications
 
 We'll write a Python program that will support creating, retrieving, updating, and deleting phonebook entries consisting of a name and a phone number.
@@ -84,71 +86,7 @@ Here is an example skeleton program with function definitions for `create`ing a 
 
 Similarly, create functions for `update`, `lookup`, `reverse-lookup`, and `delete`.
 
-[Back to top](#top)
-
-## 2.1 The `__name__` Variable
-
-Why do I have `if __name__ == '__main__':` in the above code snippet?
-
-Suppose someone (maybe you) wanted to `import` this `phonebook.py` script into another program. Maybe you want to do this so you could write tests for the program (which we'll cover later), or because you wanted to make a web front-end to the program. You would probably want some code that executes only if the script is executed directly (e.g. by calling `python phonebook.py` on the command line) that is *not* executed when you `import` the script into another Python program.
-
-This is exactly what the `if __name__ == '__main__'` code block is for. `__name__` is a variable whose value will be `__main__` if the script was executed directly (e.g. by `python phonebook.py`) and otherwise will be the name of the module, (e.g. `phonebook`).
-
-To make this a bit more concrete, let's make some example scripts:
-
-First `a.py`:
-
-    :::python
-    print "__name__: ", __name__
-
-What happens when we execute `a.py`?
-
-    :::console
-    $ python a.py
-    __name__:  __main__
-
-`a.py` is fairly straightforward -- we execute the `print` statement, and we see that the value of the variable `__name__` is the string `'__main__'`. `__name__` is a variable that is defined for us automatically in every Python program, and if the program was executed directly, its value is the string `'__main__'`. Great.
-
-Let's define a second script, `b.py`:
-
-    :::python
-    import a
-
-And execute `b.py`:
-
-    :::console
-    $ python b.py
-    __name__:  a
-
-`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. I'll give a basic overview of what `import` does in a later section.
-
-So the value of `__name__` inside `a` in this context is the string `'a'`, rather than `'__main__'`. This is because the code is being executed by result of an `import` statement, rather than being executed directly.
-
-How could we execute different code when we `import` a script than when we execute the script directly? This is where the `if __name__ == '__main__'` part comes into play. Let's make two more example scripts to explore this.
-
-`c.py`:
-
-    :::python
-    if __name__ == '__main__':
-        print "c.py was executed directly"
-    else:
-        print "c.py was imported"
-
-`d.py`:
-
-    :::python
-    import c
-
-And let's execute each of these scripts to see what happens:
-
-    :::console
-    $ python c.py
-    c.py was executed directly
-
-    $ python d.py
-    c.py was imported
-
-Viola! So that's what the `if __name__ == '__main__'` statement does. We'll be adding some code that we don't want to execute when we `import phonebook` into this code block.
+Wondering what the `if __name__ == '__main__'` code block is for? It's where you put code that you want to execute when you run this Python script directly, but not when you `import` this script into another one. More information on what that means can be found in the [Further Reading](#__name__) section.
 
 [Back to top](#top)
 
@@ -355,6 +293,17 @@ Your program should now support the following:
     Name, number, and phonebook name required
 
 Similarly, try giving the other commands (`update`, `remove`, `lookup`, and `reverse-lookup`) too few and too many arguments. You want to make sure that the behavior that you expect is what actually happens.
+
+[Back to top](#top)
+
+## *3.5 More Ideas
+
+If this section hasn't challenged you enough, here are some things you could work on that might be more interesting for you:
+
+* Parse the commands using a module like `argparse`
+* `raise` exceptions instead of `print`ing error messages when the user gives bad input
+* Even better, `raise` exceptions *and* `print` human-readable, helpful error messages when the user gives bad input
+* Practice test-driven development! Try writing a test for what should happen for a possible input (good or bad), run the test and watch it fail, and then work on your code until the test passes. Then repeat.
 
 [Back to top](#top)
 
@@ -570,29 +519,46 @@ Now we can create phonebooks, add entries, and look up existing entries by name.
 
 I'll give you a hint: deleting a line from a file isn't very straightforward. Instead, you'll need to save the lines you want to keep in a list, remove the old contents of the file by opening it in write mode, and then write the lines you saved in the list to the file.
 
+## *4.5 More Ideas
+
+If this section hasn't challenged you enough, here are some things you could work on that might be more interesting for you:
+
+* Enable partial string matching using either string methods or regular expressions (using the `re` module). i.e. make this work:
+
+
+        :::console
+        $ python phonebook.py lookup 'Jane' ex_phonebook
+        Jane Doe    432 123 4321
+        Jane Lin    643 357 9876
+
+* Store the phonebook entries in a database! Some common Python modules that help you interact with databases are `sqlite3` and `sqlalchemy`.
+* Store the phonebook entries as dictionaries using the `pickle` module!
+
 # 5. Writing Tests
+
+This part isn't finished yet! If you get to this point, let me know, and I can do a demo!
 
 ## 5.1 A Basic Test
 
 ## 5.2 A `tests.py` Script
 
-## 5.3 Raising Exceptions
+## 5.3 Testing Bad Input
 
-For example, let's say we wanted to test that running our program with the command
+Let's say we wanted to test that running our program with the command
 
     :::console
     $ python phonebook.py create
 
-(which is missing an argument for the phonebook name) caused an error. How would we do that? Well, we could manually type in the command and observe the results. But would we want to do that with every command variation? And for too many arguments as well as too few? That quickly becomes too many things to remember to test manually.
+(which is missing an argument for the phonebook name) causes an error. How would we do that? Well, we could manually type in the command and observe the results. But would we want to do that with every command variation? And for too many arguments as well as too few? That quickly becomes too many things to remember to test manually.
 
-Thankfully, testing frameworks like Python's `unittest` provide methods that test whether code `raise`s a specific exception. We'll cover more on testing and using `unittest` in the next chapter.
+Thankfully, testing frameworks like Python's `unittest` provide methods that test whether code `raise`s a specific exception.
 
 To make writing tests easier, we can define a custom exception that we'll call `ArgumentError`. To do this we just need to subclass it from the built-in `Exception` class:
 
     :::python
     class ArgumentError(Exception): pass
 
-Subclassing isn't particularly important to understand for this exercise, but is definitely important to understand in other contexts. I won't cover it here.
+Subclassing and class inheritance is out of scope for this exercise, but it's really interesting! I definitely recommend reading about it and playing around with it.
 
 Now to `raise` this exception when an invalid number of arguments is passed:
 
@@ -627,16 +593,82 @@ We should also `raise` an exception if the phone number passed as an argument is
 
 # Further Reading
 
-* Partial String Matching
-* Regular Expressions
+## Helpful Modules and Resources
 
-### The `argparse` module
+* The [`argparse` module](https://docs.python.org/dev/library/argparse.html) for building a powerful command line argument parser
+* The [`re` module](https://docs.python.org/2/library/re.html) for Regular Expressions
+* [Dive Into Python](http://www.diveintopython3.net/) for generally learning about Python
 
-### Mapping commands to functions
+<a name="__name__"></a>
+## The `__name__` Variable
 
-This section is a bit more advanced than the others. If you've found the previous sections difficult, you might want to skip this one and come back to it later.
+Why do I have `if __name__ == '__main__':` in the above code snippet?
 
-Having an `if`/`elif` statement for each command is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
+Suppose someone (maybe you) wanted to `import` this `phonebook.py` script into another program. Maybe you want to do this so you could write tests for the program (which we'll cover later), or because you wanted to make a web front-end to the program. You would probably want some code that executes only if the script is executed directly (e.g. by calling `python phonebook.py` on the command line) that is *not* executed when you `import` the script into another Python program.
+
+This is exactly what the `if __name__ == '__main__'` code block is for. `__name__` is a variable whose value will be `__main__` if the script was executed directly (e.g. by `python phonebook.py`) and otherwise will be the name of the module, (e.g. `phonebook`).
+
+To make this a bit more concrete, let's make some example scripts:
+
+First `a.py`:
+
+    :::python
+    print "__name__: ", __name__
+
+What happens when we execute `a.py`?
+
+    :::console
+    $ python a.py
+    __name__:  __main__
+
+`a.py` is fairly straightforward -- we execute the `print` statement, and we see that the value of the variable `__name__` is the string `'__main__'`. `__name__` is a variable that is defined for us automatically in every Python program, and if the program was executed directly, its value is the string `'__main__'`. Great.
+
+Let's define a second script, `b.py`:
+
+    :::python
+    import a
+
+And execute `b.py`:
+
+    :::console
+    $ python b.py
+    __name__:  a
+
+`b.py` is a bit less straightforward. Here we `import a`, which *executes the code that is inside `a.py`*. I'll give a basic overview of what `import` does in a later section.
+
+So the value of `__name__` inside `a` in this context is the string `'a'`, rather than `'__main__'`. This is because the code is being executed by result of an `import` statement, rather than being executed directly.
+
+How could we execute different code when we `import` a script than when we execute the script directly? This is where the `if __name__ == '__main__'` part comes into play. Let's make two more example scripts to explore this.
+
+`c.py`:
+
+    :::python
+    if __name__ == '__main__':
+        print "c.py was executed directly"
+    else:
+        print "c.py was imported"
+
+`d.py`:
+
+    :::python
+    import c
+
+And let's execute each of these scripts to see what happens:
+
+    :::console
+    $ python c.py
+    c.py was executed directly
+
+    $ python d.py
+    c.py was imported
+
+Viola! So that's what the `if __name__ == '__main__'` statement does. We'll be adding some code that we don't want to execute when we `import phonebook` into this code block.
+
+[Back to top](#top)
+
+## Mapping commands to functions
+
+Having an `if`/`elif` statement for each of our commands is kind of ugly. Instead, try creating a dictionary mapping the commands to their corresponding functions, like this:
 
     :::python
     command_funcs = {
