@@ -5,9 +5,9 @@ Slug: about
 
 <img style="float:right; padding-left:10px" src="https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/me_white_bg.jpg" />
 
-I'm a Software Engineer based in Brooklyn.
+I'm a Software Engineer on [Venmo](https://venmo.com/)'s Scaling team in New York City, where I've been working on projects like migrating data from MySQL to Cassandra.
 
-I recently attended [Hacker School](https://www.hackerschool.com/), where I worked on projects like compiling a Harry Potter-themed Python interpreter and converting a picture of my cat to sound.
+I'm also a [Hacker School](https://www.hackerschool.com/) alum, where I compiled a Harry Potter-themed Python interpreter and converted a picture of my cat to sound.
 
 Previously I studied pure math and did some data analysis and machine learning in Austin, TX.
 
