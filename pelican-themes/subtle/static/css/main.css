@@ -408,10 +408,11 @@ li:last-child .hentry, #content > .hentry {border: 0; margin: 0;}
 
 .page-title {
     font-weight: 900;
-    margin-bottom: 10px;
+    border-bottom: thin solid;
+    margin-bottom: .5em;
+    padding-bottom: .5em;
     margin-top: 0;
     color: #000305;
-
 }
 
 .entry-summary {
