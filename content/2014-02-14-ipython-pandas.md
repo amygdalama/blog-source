@@ -256,10 +256,10 @@ notebook can be easily viewed on [NBViewer][example notebook].
 [tutorial]: https://github.com/jvns/pandas-cookbook
 [configured]: http://www.sublimetext.com/docs/2/osx_command_line.html
 [here]: http://matplotlib.org/users/installing.html
-[barbaric]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/barbaric.png
-[ipythoncell]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/ipythoncell.png
-[secondcell]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/ipythoncell.png
+[barbaric]: |filename|/images/barbaric.png
+[ipythoncell]: |filename|/images/ipythoncell.png
+[secondcell]: |filename|/images/ipythoncell.png
 [example notebook]: http://nbviewer.ipython.org/github/amygdalama/ipython-pandas-whoa/blob/master/ipython-pandas-whoa.ipynb
-[table]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/table.png
-[quite_elegant]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/quite_elegant.png
+[table]: |filename|/images/table.png
+[quite_elegant]: |filename|/images/quite_elegant.png
 [GitHub]: https://github.com/amygdalama/ipython-pandas-whoa

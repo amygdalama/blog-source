@@ -135,5 +135,5 @@ The full code can be found on my [GitHub].
 
   [Bayesian Methods for Hackers]: https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers
   [the book]: http://nbviewer.ipython.org/github/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/blob/master/Chapter2_MorePyMC/MorePyMC.ipynb
-  [pymc_posteriors]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/pymc_posteriors.png
+  [pymc_posteriors]: |filename|/images/pymc_posteriors.png
   [GitHub]: https://github.com/amygdalama/tutorials/blob/master/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers/MySourceFiles/Chapter2/ab-real-data.py

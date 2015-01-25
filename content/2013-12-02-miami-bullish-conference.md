@@ -39,7 +39,7 @@ BullCon was the perfect balance of gentlewomanly recreation and
 productivity, and I'm excited to see the progress each of us makes in
 the next year. See you ladies in 2014 (and on the internet)!
 
-[bullicorns]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/bullicorns.jpg
+[bullicorns]: |filename|/images/bullicorns.jpg
 [recreating like a total fucking badass]: http://www.thegloss.com/2012/03/21/career/bullish-life-achieve-goals-and-glory-by-recreating-like-a-total-fcking-badass-126/
 [BullCon]: http://www.bullishconference.com/
 [Bullish]: http://www.getbullish.com/tag/bullcon2013/

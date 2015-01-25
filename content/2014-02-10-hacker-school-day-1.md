@@ -53,8 +53,8 @@ the Bene Gesserit litany:
 > nothing... Only I will remain.*
 
   [Hacker School]: https://www.hackerschool.com/
-  [these]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/hackers-movie.jpg
+  [these]: |filename|/images/hackers-movie.jpg
   [wget]: http://mathamy.com/2013/12/02/homebrew-path-pythonpath/
   [sanity]: http://mathamy.com/2013/12/27/wget-sanity-part-2-im-an-idiot-and-decided-to-switch-to-a-brewed-python-and-reinstall-the-scientific-stack-at-10pm/
   [scikit-learn]: http://scikit-learn.org/
-  [appleiidong]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/appleiidong.jpg
+  [appleiidong]: |filename|/images/appleiidong.jpg

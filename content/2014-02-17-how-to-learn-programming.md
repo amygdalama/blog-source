@@ -27,11 +27,11 @@ Being surrounded by other humans who are learning programming and working on rea
 
 ##The Fear, You Will Let It Pass Through You
 
-<img src="https://raw2.github.com/amygdalama/blog-source/master/content/images/paul_fear.jpg">
+<img src="|filename|/images/paul_fear.jpg">
 
 This fear is totally reasonable! And there are so many more reasons to be afraid! Most of us are quite accustomed to learning in a very sequential way, in which we start with Chapter 1, and then once we finish Chapter 12, everyone assumes we know what we're talking about. Learning to code is very different from this, and foreign things can be scary! Also, working on solving problems on our own can be scary because maybe you aren't smart enough! And working on solving problems with others is scary because you might not be good at communicating your ideas! Or you might not be as good at programming as they are! Or maybe you picked the wrong programming language! Or maybe you're afraid of not putting in enough effort to really get anywhere! Or of working so much you get burnt out! There are many things to be afraid of. In fact, on the first day of Hacker School we made a list of these things:
 
-![Hacker Schoolers Are Nervous](https://raw2.github.com/amygdalama/blog-source/master/content/images/hs-nervous.jpeg)
+![Hacker Schoolers Are Nervous](|filename|/images/hs-nervous.jpeg)
 
 See! Other people are afraid! Fear is normal!
 

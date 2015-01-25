@@ -53,6 +53,6 @@ by importance, but probably aren't perfectly ordered.
 * Murdered out GitHub account (a pleasant side effect of all of the
     above)
 
-[tennisballs]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/allthetennisballs.gif
+[tennisballs]: |filename|/images/allthetennisballs.gif
 [GitHub]: https://github.com/amygdalama/hacker-school-progress
 [Hilary Mason]: http://www.hilarymason.com/presentations-2/in-search-of-the-optimal-cheeseburger/

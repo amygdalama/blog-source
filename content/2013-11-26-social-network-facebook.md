@@ -30,6 +30,6 @@ graphing social networks and to Julianhi for his [tutorial] on setting
 up Rfacebook.
 
   [Facebook friends network analysis]: http://blog.revolutionanalytics.com/2013/11/how-to-analyze-you-facebook-friends-network-with-r.html
-  [North Shore High School]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/nshs.jpg
-  [fb-network]: https://raw2.github.com/amygdalama/amygdalama.github.io/master/images/fb-network.png
+  [North Shore High School]: |filename|/images/nshs.jpg
+  [fb-network]: |filename|/images/fb-network.png
   [tutorial]: http://thinktostart.wordpress.com/2013/11/19/analyzing-facebook-with-r/
