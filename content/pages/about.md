@@ -7,6 +7,6 @@ Slug: about
 
 I'm a software engineer on [Venmo](https://venmo.com/)'s Scaling team in New York City.
 
-I'm also a ~~Hacker School~~ [Recurse Center](https://www.recurse.com/) alum, where I compiled a Harry Potter-themed Python interpreter and converted a picture of my cat to sound.
+I'm also a <s>Hacker School</s> [Recurse Center](https://www.recurse.com/) alum, where I compiled a Harry Potter-themed Python interpreter and converted a picture of my cat to sound.
 
 Previously I studied pure math and did some data analysis and machine learning in Austin, TX.
